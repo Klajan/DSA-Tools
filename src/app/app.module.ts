@@ -6,6 +6,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSliderModule } from '@angular/material/slider';
+import { MatGridListModule } from '@angular/material/grid-list';
 
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { AppRoutingModule } from './app-routing.module';
@@ -34,6 +35,7 @@ import { MappedSliderComponent } from './mapped-slider/mapped-slider.component';
     MatButtonToggleModule,
     MatIconModule,
     MatSliderModule,
+    MatGridListModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

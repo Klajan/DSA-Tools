@@ -1,0 +1,13 @@
+<div class="div-parent d-flex flex-column">
+    <div class="d-flex justify-content-center">
+        <mat-slider min="0" [max]="items.length - 1" step="1" [value]="sliderValue" (valueChange)="onValueChange($event)" (input)="onInputChange($event)" color="primary"></mat-slider>
+    </div>
+    <div class="d-flex flex-row justify-content-around">
+        <div>
+            <div>{{previewName}}</div>
+        </div>
+        <div>
+            <div>{{previewValue}}</div>
+        </div>
+    </div>
+</div>
