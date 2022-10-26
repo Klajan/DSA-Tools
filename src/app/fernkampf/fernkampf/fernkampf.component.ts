@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
-import { MappedSliderComponent } from 'src/app/mapped-slider/mapped-slider.component';
+import { FernkampfTabellenService } from '../fernkampf-tabellen.service';
+import { ValueStoreFernService } from '../value-store-fern.service';
 
 @Component({
   selector: 'app-fernkampf',
@@ -9,17 +10,11 @@ import { MappedSliderComponent } from 'src/app/mapped-slider/mapped-slider.compo
 })
 export class FernkampfComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    protected lookupTable: FernkampfTabellenService,
+    protected valueStore: ValueStoreFernService,
+  ) { }
 
   ngOnInit(): void {
   }
-
-  entfernung = [
-    { name: 'sehr nah', value: -2 },
-    { name: 'nah', value: 0 },
-    { name: 'mittel', value: +4 },
-    { name: 'weit', value: +8 },
-    { name: 'extrem weit', value: +12 },
-  ];
-
 }

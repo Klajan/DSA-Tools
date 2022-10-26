@@ -1,2 +1,7 @@
+<app-result-fern></app-result-fern>
 <p>fernkampf works!</p>
-<app-mapped-slider [items]="entfernung"></app-mapped-slider>
+<app-mapped-slider [items]="lookupTable.distanz" title="Entfernung" [(sliderValue)]="valueStore.distanz"></app-mapped-slider>
+<app-mapped-slider [items]="lookupTable.bewegung" title="Bewegung" [(sliderValue)]="valueStore.bewegung"></app-mapped-slider>
+<app-mapped-slider [items]="lookupTable.ziel" title="Größe" [(sliderValue)]="valueStore.ziel"></app-mapped-slider>
+<app-mapped-slider [items]="lookupTable.licht" title="Licht" [(sliderValue)]="valueStore.licht"></app-mapped-slider>
+<app-mapped-slider [items]="lookupTable.sicht" title="Sicht" [(sliderValue)]="valueStore.sicht"></app-mapped-slider>

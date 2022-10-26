@@ -1,15 +1,21 @@
-mat-slider {
-    max-width: 380px;
-    width: 100%;
-    height: 50px;
-}
-mat-grid-list {
-    max-width: 400px;
-}
+@use 'sass:map';
+@use '@angular/material' as mat;
+@import '../../theme.scss';
+@import '../../text.scss';
+
 .div-parent {
     max-width: 400px;
     max-height: 200px;
-    min-width: 100px;
     width: 100%;
 }
+.fill {
+    width: 100%;
+    height: 100%;
+}
 
+::ng-deep {
+    mat-slider.mat-slider-min-value:not(.mat-slider-thumb-value-showing) .mat-slider-thumb {
+        background-color: mat.get-color-from-palette($my-accent) !important;
+        border-color: mat.get-color-from-palette($my-accent) !important;
+    }
+}
