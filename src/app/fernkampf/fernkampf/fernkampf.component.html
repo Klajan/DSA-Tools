@@ -1,5 +1,5 @@
 <app-result-fern></app-result-fern>
-<p>fernkampf works!</p>
+<app-toggle-collapsable title="Deckung"><app-mapped-slider [items]="lookupTable.deckung" [(sliderValue)]="valueStore.deckung"></app-mapped-slider></app-toggle-collapsable>
 <app-mapped-slider [items]="lookupTable.distanz" title="Entfernung" [(sliderValue)]="valueStore.distanz"></app-mapped-slider>
 <app-mapped-slider [items]="lookupTable.bewegung" title="Bewegung" [(sliderValue)]="valueStore.bewegung"></app-mapped-slider>
 <app-mapped-slider [items]="lookupTable.ziel" title="Größe" [(sliderValue)]="valueStore.ziel"></app-mapped-slider>
