@@ -1,13 +1,28 @@
 /* You can add global styles to this file, and also import other style files */
 @use "@angular/material" as mat;
 @import "./theme.scss";
-
 @include mat.core();
+
 /* Importing Bootstrap SCSS file. */
-@import '~bootstrap/scss/bootstrap';
+@import '../node_modules/bootstrap/scss/bootstrap';
 
 @include mat.all-component-themes($my-theme);
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
+.title {
+    @include font-size(4rem);
+}
+.text-md {
+    @include font-size(1rem);
+}
+.text-mdlg {
+    @include font-size(1.2rem);
+}
+.text-lg {
+    @include font-size(1.5rem)
+}
+.text-xl {
+    @include font-size(2.25rem);
+}
