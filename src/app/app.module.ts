@@ -11,6 +11,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { AppRoutingModule } from './app-routing.module';
@@ -22,6 +23,7 @@ import { FernkampfComponent } from './fernkampf/fernkampf/fernkampf.component';
 import { MappedSliderComponent } from './mapped-slider/mapped-slider.component';
 import { ResultFernComponent } from './fernkampf/result-fern/result-fern.component';
 import { NumericInputComponent } from './numeric-input/numeric-input.component';
+import { ToggleCollapsableComponent } from './toggle-collapsable/toggle-collapsable.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +32,8 @@ import { NumericInputComponent } from './numeric-input/numeric-input.component';
     FernkampfComponent,
     MappedSliderComponent,
     ResultFernComponent,
-    NumericInputComponent
+    NumericInputComponent,
+    ToggleCollapsableComponent
   ],
   imports: [
     BrowserModule,
@@ -48,6 +51,7 @@ import { NumericInputComponent } from './numeric-input/numeric-input.component';
     MatInputModule,
     MatFormFieldModule,
     MatSlideToggleModule,
+    MatExpansionModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

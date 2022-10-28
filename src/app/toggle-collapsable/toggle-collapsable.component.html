@@ -1,0 +1,9 @@
+<div class="div-parent border rounded py-1">
+    <div class="d-flex flex-row px-1">
+        <mat-slide-toggle class="text-mdlg" [checked]="enabled" (change)="onToggleChange($event)">{{label}}</mat-slide-toggle>
+    </div>
+    <mat-divider class="mt-1" [hidden]="hidden"></mat-divider>
+    <div class="w-100 no-overflow p-0 m-0" [@slideDown]="state">
+        <ng-content></ng-content>
+    </div>
+</div>
