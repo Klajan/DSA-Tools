@@ -1,29 +1,21 @@
 <div class="div-parent border rounded p-1">
-    <!-- <div class="d-flex justify-content-center m-0" [hidden]="title === null">
-        <h3 class="m-0">{{title}}</h3>
-    </div> -->
+    <div class="d-flex p-1 m-0 text-mdlg" [hidden]="title === null">
+        {{title}}
+    </div>
     <mat-divider [hidden]="title === null"></mat-divider>
-    <div class="container text-center">
+    <div class="container">
         <div class="row">
-        <div class="col-2">
-            <mat-label class="text-large">{{previewValue}}</mat-label>
-        </div>
-        <div class="col-10">
-            <div class="row">
-                <mat-label class="text-center w-100 text-normal">{{previewName}}</mat-label>
+            <div class="col-2 d-flex align-middle align-items-center">
+                <mat-label class="text-xl align-middle align-self-center">{{previewValue}}</mat-label>
             </div>
-            <div class="row">
-                <mat-slider class="w-100" min="0" [max]="items.length - 1" step="1" [value]="sliderValue" (valueChange)="onValueChange($event)" (input)="onInputChange($event)" color="accent"></mat-slider>
+            <div class="col-10">
+                <div class="row">
+                    <mat-label class="text-center w-100 text-md">{{previewName}}</mat-label>
+                </div>
+                <div class="row">
+                    <mat-slider class="w-100" min="0" [max]="items.length - 1" step="1" [value]="sliderValue" (valueChange)="onValueChange($event)" (input)="onInputChange($event)" color="accent"></mat-slider>
+                </div>
             </div>
-        </div>
         </div>
     </div>
-    <!-- <div class="d-flex flex-row justify-content-around d-none">
-        <div class="align-items-center border rounded px-2 py-1 mx-1 fill">
-            <p class="m-auto font-weight-bold">{{previewName}}</p>
-        </div>
-        <div class="align-items-center border rounded px-2 py-1 mx-1 fill">
-            <p class="m-auto font-weight-bold">{{previewValue}}</p>
-        </div>
-    </div> -->
 </div>

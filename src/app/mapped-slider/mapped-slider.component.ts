@@ -20,9 +20,10 @@ export class MappedSliderComponent implements OnInit {
     this._sliderValue = value;
     this.updateValues(value);
   }
-  @Input() title: string | null = null
+  @Input() title: string|null = null
   @Output() sliderValueChange = new EventEmitter<number>();
   @Output() selectedValueChange = new EventEmitter<number>();
+  @Output() selectedNameChange = new EventEmitter<string>();
 
   public get sliderValue(): number {
     return this._sliderValue;
@@ -31,8 +32,6 @@ export class MappedSliderComponent implements OnInit {
     return this._items;
   }
 
-  protected name: string = "empty";
-  protected value: number = 0;
   protected previewName: string = "empty";
   protected previewValue: number = 0;
 
@@ -41,13 +40,16 @@ export class MappedSliderComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  private capIndex(index: number) {
+    return Math.min(Math.max(index, 0), this.items.length - 1);
+  }
+
   private updateValues(value: number) {
-    let index = Math.min(Math.max(value, 0), this.items.length - 1)
-    this.name = this._items[index].name;
-    this.value = this._items[index].value;
-    this.previewName = this.name;
-    this.previewValue = this.value;
-    this.selectedValueChange.emit(this.value);
+    let index = this.capIndex(value);
+    this.previewName = this._items[index].name;
+    this.previewValue = this._items[index].value;
+    this.selectedValueChange.emit(this._items[index].value);
+    this.selectedNameChange.emit(this._items[index].name);
   }
   onValueChange(value: number | null) {
     if (value === null) return;
@@ -56,13 +58,13 @@ export class MappedSliderComponent implements OnInit {
   }
   onInputChange(event: MatSliderChange) {
     if (event.value === null) return;
-    let index = Math.min(Math.max(event.value, 0), this.items.length - 1)
+    let index = this.capIndex(event.value);
     this.previewName = this._items[index].name;
     this.previewValue = this._items[index].value;
   }
 
   formatThumb = ((value: number) => {
-    return this._items[value].value;
+    return this._items[this.capIndex(value)].value;
   }).bind(this);
 
 }

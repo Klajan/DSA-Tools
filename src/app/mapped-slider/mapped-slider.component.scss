@@ -1,16 +1,12 @@
-@use 'sass:map';
+//@use 'sass:map';
 @use '@angular/material' as mat;
 @import '../../theme.scss';
-@import '../../text.scss';
+//@import '../../styles.scss';
 
 .div-parent {
     max-width: 400px;
     max-height: 200px;
     width: 100%;
-}
-.fill {
-    width: 100%;
-    height: 100%;
 }
 
 ::ng-deep {
