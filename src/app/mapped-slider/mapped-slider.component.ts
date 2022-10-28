@@ -20,8 +20,9 @@ export class MappedSliderComponent implements OnInit {
     this._sliderValue = value;
     this.updateValues(value);
   }
-  @Input() title: string|null = null
   @Output() sliderValueChange = new EventEmitter<number>();
+  @Input() title: string|null = null
+
   @Output() selectedValueChange = new EventEmitter<number>();
   @Output() selectedNameChange = new EventEmitter<string>();
 
@@ -44,12 +45,16 @@ export class MappedSliderComponent implements OnInit {
     return Math.min(Math.max(index, 0), this.items.length - 1);
   }
 
-  private updateValues(value: number) {
+  private updatePreview(value: number) {
     let index = this.capIndex(value);
     this.previewName = this._items[index].name;
     this.previewValue = this._items[index].value;
+  }
+  private updateValues(value: number) {
+    let index = this.capIndex(value);
     this.selectedValueChange.emit(this._items[index].value);
     this.selectedNameChange.emit(this._items[index].name);
+    this.updatePreview(index);
   }
   onValueChange(value: number | null) {
     if (value === null) return;
@@ -58,9 +63,7 @@ export class MappedSliderComponent implements OnInit {
   }
   onInputChange(event: MatSliderChange) {
     if (event.value === null) return;
-    let index = this.capIndex(event.value);
-    this.previewName = this._items[index].name;
-    this.previewValue = this._items[index].value;
+    this.updatePreview(event.value);
   }
 
   formatThumb = ((value: number) => {
