@@ -2,16 +2,16 @@ import { Injectable } from '@angular/core';
 import { FernkampfTabellenService } from './fernkampf-tabellen.service';
 import { WaffenTyp, LichtVorteil } from './types-fernkampf';
 import { ValueStoreFernService } from './value-store-fern.service';
-import * as LookupTablePipes  from './pipes/fernkampf-difficulty.pipe';
+import * as DifficultyPipes  from './pipes/fernkampf-difficulty.pipe';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FernkampfCalculatorService {
 
-  private readonly LICHTPIPE = new LookupTablePipes.LichtDifficultyPipe();
-  private readonly STEILSCHUSSPIPE = new LookupTablePipes.SteilschussDifficultyPipe();
-  private readonly REITENPIPE = new LookupTablePipes.ReitDifficultyPipe();
+  private readonly LICHTPIPE = new DifficultyPipes.LichtDifficultyPipe();
+  private readonly STEILSCHUSSPIPE = new DifficultyPipes.SteilschussDifficultyPipe();
+  private readonly REITENPIPE = new DifficultyPipes.ReitDifficultyPipe();
 
   private _difficulty: number = 0;
   get difficulty() { return this._difficulty; }
@@ -51,9 +51,9 @@ export class FernkampfCalculatorService {
 
   private calcSteilschuss(): number {
     if (!this.valueStore.isSteilschuss) return 0;
-    let difficulty = this.lookupTables.getSteilschussValue(this.valueStore.steilschuss);
-    let waffe = this.valueStore.waffentyp;
-    return this.STEILSCHUSSPIPE.transform(difficulty, waffe);
+    return this.STEILSCHUSSPIPE.transform(
+      this.lookupTables.getSteilschussValue(this.valueStore.steilschuss),
+      this.valueStore.waffentyp);
     // if (this.valueStore.waffentyp === WaffenTyp.Wurfwaffe) {
     //   return this.lookupTables.getSteilwurfValue(this.valueStore.steilwurf);
     // } else {
@@ -63,9 +63,14 @@ export class FernkampfCalculatorService {
 
   private calcReitenDifficulty(): number {
     if (!this.valueStore.hasReittier) return 0;
-    let difficulty = this.lookupTables.getReitenSchussValue(this.valueStore.reitbewegung);
-    let waffe = this.valueStore.waffentyp;
-    return this.REITENPIPE.transform(difficulty, waffe);
+    let weapon = this.valueStore.waffentyp;
+    let berittenerschütze = this.valueStore.berittenerschuetze;
+    let difficulty = this.REITENPIPE.transform(
+      this.lookupTables.getReitenSchussValue(this.valueStore.reitbewegung),
+      weapon,
+      berittenerschütze);
+    if(this.valueStore.reitOhneSattel) difficulty += this.REITENPIPE.transform(4, weapon, berittenerschütze);
+    return difficulty;
     // let multi: number = this.valueStore.berittenerschuetze ? 2.0 : 1.0;
     // let difficulty: number = this.lookupTables.getReitenSchussValue(this.valueStore.reitbewegung);
     // if (this.valueStore.reitOhneSattel) { difficulty += 4 }
