@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Subject, Observable } from 'rxjs';
 
-import { WaffenTyp, Deckung } from './types'
+import { WaffenTyp, Scharfschütze, LichtVorteil } from './types'
 
 @Injectable({
   providedIn: 'root'
@@ -222,38 +222,41 @@ export class ValueStoreFernService {
 
   //<-----This should be saved and persistant----->
   // Vor- / Nachteile
-  private _nachtsicht: boolean = false;
+  private _lichtVorteil: LichtVorteil = LichtVorteil.None;
+  public get lichtVorteil(): LichtVorteil {
+    return this._lichtVorteil;
+  }
+  public set lichtVorteil(value: LichtVorteil) {
+    if (this._lichtVorteil === value) return;
+    this._lichtVorteil = value;
+    this.notifyValuesChanged.next();
+  }
+
   get nachtsicht() {
-    return this._nachtsicht;
+    return this._lichtVorteil === LichtVorteil.Nachtsicht;
   }
   set nachtsicht(value: boolean) {
-    if (this._nachtsicht === value) return;
-    this._nachtsicht = value;
+    if (this.nachtsicht === value) return;
+    this._lichtVorteil = value ? LichtVorteil.Nachtsicht : LichtVorteil.None;
     this.notifyValuesChanged.next();
-    if (value === true) this.daemmersicht = true;
   }
 
-  private _daemmersicht: boolean = false;
   get daemmersicht() {
-    return this._daemmersicht;
+    return this._lichtVorteil === LichtVorteil.Dämmerungssicht;
   }
   set daemmersicht(value: boolean) {
-    if (this._daemmersicht === value) return;
-    this._daemmersicht = value;
+    if (this.daemmersicht === value) return;
+    this._lichtVorteil = value ? LichtVorteil.Dämmerungssicht : LichtVorteil.None;
     this.notifyValuesChanged.next();
-    if (value === false) this.nachtsicht = false;
-    else this.nachtblind = false;
   }
 
-  private _nachtblind: boolean = false;
   public get nachtblind(): boolean {
-    return this._nachtblind;
+    return this._lichtVorteil === LichtVorteil.Nachtblind;
   }
   public set nachtblind(value: boolean) {
-    if (this._nachtblind === value) return;
-    this._nachtblind = value;
+    if (this.nachtblind === value) return;
+    this._lichtVorteil = value ? LichtVorteil.Nachtblind : LichtVorteil.None;
     this.notifyValuesChanged.next();
-    if (value == true) this.daemmersicht = false;
   }
 
   private _entfernungsinn: boolean = false;
@@ -297,23 +300,29 @@ export class ValueStoreFernService {
   }
 
   // Sonderfertigkeiten
-  private _scharfschuetze: boolean = false;
+  private _scharfschütze: Scharfschütze = Scharfschütze.None;
+  public get scharfschuetzeEnum(): Scharfschütze {
+    return this._scharfschütze;
+  }
+  public set scharfschuetzeEnum(value: Scharfschütze) {
+    this._scharfschütze = value;
+  }
+
   public get scharfschuetze(): boolean {
-    return this._scharfschuetze;
+    return this._scharfschütze === Scharfschütze.Scharfschütze;
   }
   public set scharfschuetze(value: boolean) {
-    if (this._scharfschuetze === value) return;
-    this._scharfschuetze = value;
+    if (this.scharfschuetze === value) return;
+    this._scharfschütze = value ? Scharfschütze.Scharfschütze : Scharfschütze.None;
     this.notifyValuesChanged.next();
   }
 
-  private _meisterschuetze: boolean = false;
   public get meisterschuetze(): boolean {
-    return this._meisterschuetze;
+    return this._scharfschütze === Scharfschütze.Meisterschütze;
   }
   public set meisterschuetze(value: boolean) {
-    if (this._meisterschuetze === value) return;
-    this._meisterschuetze = value;
+    if (this.meisterschuetze === value) return;
+    this._scharfschütze = value ? Scharfschütze.Meisterschütze : Scharfschütze.None;
     this.notifyValuesChanged.next();
   }
 
