@@ -13,7 +13,7 @@ export class ValueStoreFernService {
   public notifyValuesChanged = new Subject<void>();
   get notifyValuesChanged_() { return this.notifyValuesChanged.asObservable(); }
 
-  private static readonly _defaults = {
+  private static readonly RESET = {
     distanz: 1,
     licht: 0,
     sicht: 0,
@@ -22,10 +22,11 @@ export class ValueStoreFernService {
     deckung: 0,
     wind: 0,
     steilschuss: 0,
-    steilwurf: 0,
-    reittier: false,
-    ohneSattel: false,
     reitbewegung: 0,
+    ansage: 0,
+    zielen: 0,
+    misc: 0,
+    toggles: false,
   }
 
   // Tabellen Werte
@@ -379,5 +380,29 @@ export class ValueStoreFernService {
   }
 
   constructor() { }
+
+  public resetToDefaults() {
+    console.debug("RESETTING");
+    this._distanz = ValueStoreFernService.RESET.distanz;
+    this._licht = ValueStoreFernService.RESET.licht;
+    this._sicht = ValueStoreFernService.RESET.sicht;
+    this._bewegung = ValueStoreFernService.RESET.bewegung;
+    this._ziel = ValueStoreFernService.RESET.ziel;
+    this._hasDeckung = ValueStoreFernService.RESET.toggles;
+    this._deckung = ValueStoreFernService.RESET.deckung;
+    this._isWind = ValueStoreFernService.RESET.toggles;
+    this._wind = ValueStoreFernService.RESET.wind;
+    this._isSteilschuss = ValueStoreFernService.RESET.toggles;
+    this._steilschuss = ValueStoreFernService.RESET.steilschuss;
+    this._hasReittier = ValueStoreFernService.RESET.toggles;
+    this._reitOhneSattel = ValueStoreFernService.RESET.toggles;
+    this._reitbewegung = ValueStoreFernService.RESET.reitbewegung;
+    this._schnellschuss = ValueStoreFernService.RESET.toggles;
+    this._ansage = ValueStoreFernService.RESET.ansage;
+    this._zielen = ValueStoreFernService.RESET.zielen;
+    this._misc = ValueStoreFernService.RESET.misc;
+    this._zweiteAT = ValueStoreFernService.RESET.toggles;
+    this.notifyValuesChanged.next();
+  }
 
 }
