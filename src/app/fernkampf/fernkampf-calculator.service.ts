@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { FernkampfTabellenService } from './fernkampf-tabellen.service';
-import { WaffenTyp, LichtVorteil } from './types';
+import { WaffenTyp, LichtVorteil } from './types-fernkampf';
 import { ValueStoreFernService } from './value-store-fern.service';
 import * as LookupTablePipes  from './pipes/fernkampf-difficulty.pipe';
 

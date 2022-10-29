@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Subject, Observable } from 'rxjs';
 
-import { WaffenTyp, Scharfschütze, LichtVorteil } from './types'
+import { WaffenTyp, Scharfschütze, LichtVorteil } from './types-fernkampf'
 
 @Injectable({
   providedIn: 'root'

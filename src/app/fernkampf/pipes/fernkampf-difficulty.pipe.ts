@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { WaffenTyp, LichtVorteil } from '../types';
+import { WaffenTyp, LichtVorteil } from '../types-fernkampf';
 
 @Pipe({
   name: 'SteilschussDifficulty'
