@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-export type ObjectTable = Array<{ name: string, value: number, comment?: string }>;
+export type LookupTable = Array<{ name: string, value: number, comment?: string }>;
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +9,7 @@ export class FernkampfTabellenService {
 
   constructor() { }
 
-  private static readonly _distanz: ObjectTable = [
+  private static readonly _distanz: LookupTable = [
     { name: 'sehr nah', value: -2 },
     { name: 'nah', value: 0 },
     { name: 'mittel', value: +4 },
@@ -18,8 +18,8 @@ export class FernkampfTabellenService {
   ];
   private static readonly _defaultDistanzIndex = 1;
 
-  private static readonly _licht: ObjectTable = [
-    { name: 'Normal', value: 0 },
+  private static readonly _licht: LookupTable = [
+    { name: 'Tageslicht', value: 0 },
     { name: 'Dämmerung', value: +2 },
     { name: 'Mondlicht', value: +4 },
     { name: 'Sternenlicht', value: +6 },
@@ -27,7 +27,28 @@ export class FernkampfTabellenService {
   ];
   private static readonly _defaultLichtIndex = 0;
 
-  private static readonly _sicht: ObjectTable = [
+  //Laut Wege des Entdecker, 16 Stufen
+  private static readonly _lichtAdvanced: LookupTable = [
+    { name: 'Tageslicht', value: 0 },
+    { name: 'Tageslicht, leicht bewölkt', value: +1 },
+    { name: 'Tageslicht, stark bewölkt', value: +2 },
+    { name: 'Dämmerung', value: +3 },
+    { name: 'Dämmerung, fortgeschritten', value: +4 },
+    { name: 'Dämmerung, spät', value: +5 },
+    { name: 'Vollmondnacht', value: +6 },
+    { name: 'Vollmondnacht, bewölkt', value: +7 },
+    { name: 'Halbmondnacht', value: +8 },
+    { name: 'Halbmondnacht, bewölkt', value: +9 },
+    { name: 'Mondlose Nacht, sternenklar', value: +10 },
+    { name: 'Mondlose Nacht, leicht bewölkt', value: +11 },
+    { name: 'Mondlose Nacht, stark bewölkt', value: +12 },
+    { name: 'Finstere Nacht', value: +13 },
+    { name: 'Finsternis', value: +14 },
+    { name: 'Finsternis, fast absolut', value: +15 },
+    { name: 'absolute Finsternis', value: +16 },
+  ]
+
+  private static readonly _sicht: LookupTable = [
     { name: 'Klar', value: 0 },
     { name: 'Dunst', value: +2 },
     { name: 'Nebel', value: +4 },
@@ -35,7 +56,7 @@ export class FernkampfTabellenService {
   ];
   private static readonly _defaultSichtIndex = 0;
 
-  private static readonly _bewegung: ObjectTable = [
+  private static readonly _bewegung: LookupTable = [
     { name: 'unbeweglich', value: -4 },
     { name: 'stillstehend', value: -2 },
     { name: 'leichte Bewegung', value: 0 },
@@ -44,7 +65,7 @@ export class FernkampfTabellenService {
   ];
   private static readonly _defaultBewegungIndex = 2;
 
-  private static readonly _ziel: ObjectTable = [
+  private static readonly _ziel: LookupTable = [
     { name: 'winzig', value: +8 },
     { name: 'sehr klein', value: +6 },
     { name: 'klein', value: +4 },
@@ -54,48 +75,53 @@ export class FernkampfTabellenService {
   ];
   private static readonly _defaultZielIndex = 3;
 
-  private static readonly _deckung: ObjectTable = [
+  private static readonly _deckung: LookupTable = [
     { name: 'keine Deckung', value: 0 },
     { name: 'halbe Deckung', value: +2 },
     { name: 'dreiviertel Deckung', value: +4 },
   ];
   private static readonly _defaultDeckungIndex = 0;
 
-  private static readonly _reitbewegungSchuss: ObjectTable = [
+  private static readonly _reitbewegungSchuss: LookupTable = [
     { name: 'Reittier stehend', value: +2 },
     { name: 'Reittier im Schritt', value: +4 },
     { name: 'Reittier galoppierend', value: +8 },
   ];
-  private static readonly _defaultReitbewegungSchussIndex = 1;
+  private static readonly _defaultReitbewegungIndex = 0;
 
-  private static readonly _reitbewegungWurf: ObjectTable = [
+  private static readonly _reitbewegungArmbrustSchuss: LookupTable = [
+    { name: 'Reittier stehend', value: +2 },
+    { name: 'Reittier im Schritt', value: +4 },
+    { name: 'Reittier galoppierend', value: +8 },
+  ];
+
+  private static readonly _reitbewegungWurf: LookupTable = [
     { name: 'Reittier stehend', value: +1 },
     { name: 'Reittier im Schritt', value: +2 },
     { name: 'Reittier galoppierend', value: +4 },
   ];
-  private static readonly _defaultReitbewegungWurfIndex = 1;
 
-  private static readonly _wind: ObjectTable = [
+  private static readonly _wind: LookupTable = [
     { name: 'Normal', value: 0 },
     { name: 'böiger Seitenwind', value: +4 },
     { name: 'starker, böiger Seitenwind', value: +8 },
   ];
   private static readonly _defaultWindIndex = 0;
 
-  private static readonly _steilschuss: ObjectTable = [
+  private static readonly _steilschuss: LookupTable = [
     { name: 'Steilschuss nach unten', value: +2 },
     { name: 'Steilschuss nach oben', value: +4 },
   ];
   private static readonly _defaultSteilschussIndex = 0;
 
-  private static readonly _steilwurf: ObjectTable = [
+  private static readonly _steilwurf: LookupTable = [
     { name: 'Steilschuss nach unten', value: +2 },
     { name: 'Steilschuss nach oben', value: +8 },
   ];
   private static readonly _defaultSteilwurfIndex = 0;
 
   get distanz() { return FernkampfTabellenService._distanz; }
-  get licht() { return FernkampfTabellenService._licht; }
+  get licht() { return FernkampfTabellenService._lichtAdvanced; }
   get sicht() { return FernkampfTabellenService._sicht; }
   get bewegung() { return FernkampfTabellenService._bewegung; }
   get ziel() { return FernkampfTabellenService._ziel; }
@@ -105,6 +131,7 @@ export class FernkampfTabellenService {
   get steilwurf() { return FernkampfTabellenService._steilwurf; }
   get reitenSchuss() { return FernkampfTabellenService._reitbewegungSchuss; }
   get reitenWurf() { return FernkampfTabellenService._reitbewegungWurf; }
+  get reitenArmbrust() { return FernkampfTabellenService._reitbewegungArmbrustSchuss; }
   
   getAll() {
     return {
@@ -133,23 +160,22 @@ export class FernkampfTabellenService {
       wind: FernkampfTabellenService._defaultWindIndex,
       steilschuss: FernkampfTabellenService._defaultSteilschussIndex,
       steilwurf: FernkampfTabellenService._defaultSteilwurfIndex,
-      reitenSchuss: FernkampfTabellenService._defaultReitbewegungSchussIndex,
-      reitenWurf: FernkampfTabellenService._defaultReitbewegungWurfIndex,
+      reitenBewegung: FernkampfTabellenService._defaultReitbewegungIndex,
     }
   }
 
-  private getValueChecked(index: number, table: ObjectTable): number|null {
+  private getValueChecked(index: number, table: LookupTable): number|null {
     return index >= 0 && index < table.length ? table[index].value : null;
   }
 
-  private getValueLimited(index: number, table: ObjectTable): number {
+  private getValueLimited(index: number, table: LookupTable): number {
     return table[Math.min(Math.max(0, index), table.length - 1)].value;
   }
 
   getDistanzValue(index: number) { return this.getValueLimited(index, FernkampfTabellenService._distanz); }
   getZielValue(index: number) { return this.getValueLimited(index, FernkampfTabellenService._ziel); }
   getBewegungValue(index: number) { return this.getValueLimited(index, FernkampfTabellenService._bewegung); }
-  getLichtValue(index: number) { return this.getValueLimited(index, FernkampfTabellenService._licht); }
+  getLichtValue(index: number) { return this.getValueLimited(index, FernkampfTabellenService._lichtAdvanced); }
   getSichtValue(index: number) { return this.getValueLimited(index, FernkampfTabellenService._sicht); }
   getDeckungValue(index: number) { return this.getValueLimited(index, FernkampfTabellenService._deckung); }
   getWindValue(index: number) { return this.getValueLimited(index, FernkampfTabellenService._wind); }

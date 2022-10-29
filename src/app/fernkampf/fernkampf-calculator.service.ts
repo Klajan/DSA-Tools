@@ -20,13 +20,12 @@ export class FernkampfCalculatorService {
 
   private calcLicht(): number {
     let difficulty = this.lookupTables.getLichtValue(this.valueStore.licht);
-    let cap = 99;
+    let cap = 16;
     if (this.valueStore.daemmersicht) {
       difficulty = Math.ceil(difficulty / 2.0);     // divide by 2 for Dämerungsicht
       if (this.valueStore.nachtsicht) { cap = 5; } // cap at 5 if char has Nachtsicht
     } else if (this.valueStore.nachtblind) {
       difficulty = difficulty * 2;
-      cap = 8;
     }
     return Math.min(difficulty, cap);
   }
