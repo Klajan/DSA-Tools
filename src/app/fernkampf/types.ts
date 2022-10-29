@@ -1,3 +1,5 @@
+type LookupTable = Array<{ name: string, value: number, comment?: string }>;
+
 enum WaffenTyp {
     Bogen,
     Armbrust,
@@ -6,13 +8,22 @@ enum WaffenTyp {
     Blasrohr
 }
 
-enum Deckung {
-    keine = 0,
-    halbe = +2,
-    dreiviertel = +4
+enum Scharfschütze {
+    None,
+    Scharfschütze,
+    Meisterschütze,
+}
+
+enum LichtVorteil {
+    None,
+    Dämmerungssicht,
+    Nachtsicht,
+    Nachtblind
 }
 
 export {
+    LookupTable,
     WaffenTyp,
-    Deckung
+    Scharfschütze,
+    LichtVorteil
 }
