@@ -76,7 +76,6 @@ export class FernkampfTabellenService {
   private static readonly _defaultZielIndex = 3;
 
   private static readonly _deckung: LookupTable = [
-    { name: 'keine Deckung', value: 0 },
     { name: 'halbe Deckung', value: +2 },
     { name: 'dreiviertel Deckung', value: +4 },
   ];
@@ -89,12 +88,7 @@ export class FernkampfTabellenService {
   ];
   private static readonly _defaultReitbewegungIndex = 0;
 
-  private static readonly _reitbewegungArmbrustSchuss: LookupTable = [
-    { name: 'Reittier stehend', value: +2 },
-    { name: 'Reittier im Schritt', value: +4 },
-    { name: 'Reittier galoppierend', value: +8 },
-  ];
-
+  //deprecated
   private static readonly _reitbewegungWurf: LookupTable = [
     { name: 'Reittier stehend', value: +1 },
     { name: 'Reittier im Schritt', value: +2 },
@@ -128,10 +122,9 @@ export class FernkampfTabellenService {
   get deckung() { return FernkampfTabellenService._deckung; }
   get wind() { return FernkampfTabellenService._wind; }
   get steilschuss() { return FernkampfTabellenService._steilschuss; }
-  get steilwurf() { return FernkampfTabellenService._steilwurf; }
+  get steilwurf() { return FernkampfTabellenService._steilwurf; } //deprecated
   get reitenSchuss() { return FernkampfTabellenService._reitbewegungSchuss; }
-  get reitenWurf() { return FernkampfTabellenService._reitbewegungWurf; }
-  get reitenArmbrust() { return FernkampfTabellenService._reitbewegungArmbrustSchuss; }
+  get reitenWurf() { return FernkampfTabellenService._reitbewegungWurf; } //deprecated
   
   getAll() {
     return {
@@ -180,8 +173,8 @@ export class FernkampfTabellenService {
   getDeckungValue(index: number) { return this.getValueLimited(index, FernkampfTabellenService._deckung); }
   getWindValue(index: number) { return this.getValueLimited(index, FernkampfTabellenService._wind); }
   getSteilschussValue(index: number) { return this.getValueLimited(index, FernkampfTabellenService._steilschuss); }
-  getSteilwurfValue(index: number) { return this.getValueLimited(index, FernkampfTabellenService._steilwurf); }
+  getSteilwurfValue(index: number) { return this.getValueLimited(index, FernkampfTabellenService._steilwurf); } //deprecated
   getReitenSchussValue(index: number) { return this.getValueLimited(index, FernkampfTabellenService._reitbewegungSchuss); }
-  getReitenWurfValue(index: number) { return this.getValueLimited(index, FernkampfTabellenService._reitbewegungWurf); }
+  getReitenWurfValue(index: number) { return this.getValueLimited(index, FernkampfTabellenService._reitbewegungWurf); } //deprecated
 
 }

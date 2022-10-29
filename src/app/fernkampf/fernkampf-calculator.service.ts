@@ -1,12 +1,17 @@
 import { Injectable } from '@angular/core';
 import { FernkampfTabellenService } from './fernkampf-tabellen.service';
-import { WaffenTyp } from './types';
+import { WaffenTyp, LichtVorteil } from './types';
 import { ValueStoreFernService } from './value-store-fern.service';
+import * as LookupTablePipes  from './pipes/fernkampf-difficulty.pipe';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FernkampfCalculatorService {
+
+  private readonly LICHTPIPE = new LookupTablePipes.LichtDifficultyPipe();
+  private readonly STEILSCHUSSPIPE = new LookupTablePipes.SteilschussDifficultyPipe();
+  private readonly REITENPIPE = new LookupTablePipes.ReitDifficultyPipe();
 
   private _difficulty: number = 0;
   get difficulty() { return this._difficulty; }
@@ -20,14 +25,16 @@ export class FernkampfCalculatorService {
 
   private calcLicht(): number {
     let difficulty = this.lookupTables.getLichtValue(this.valueStore.licht);
-    let cap = 16;
-    if (this.valueStore.daemmersicht) {
-      difficulty = Math.ceil(difficulty / 2.0);     // divide by 2 for Dämerungsicht
-      if (this.valueStore.nachtsicht) { cap = 5; } // cap at 5 if char has Nachtsicht
-    } else if (this.valueStore.nachtblind) {
-      difficulty = difficulty * 2;
-    }
-    return Math.min(difficulty, cap);
+    let vorteil = this.valueStore.lichtVorteil;
+    return this.LICHTPIPE.transform(difficulty, vorteil);
+    // let cap = 16;
+    // if (this.valueStore.daemmersicht) {
+    //   difficulty = Math.ceil(difficulty / 2.0);     // divide by 2 for Dämerungsicht
+    //   if (this.valueStore.nachtsicht) { cap = 5; } // cap at 5 if char has Nachtsicht
+    // } else if (this.valueStore.nachtblind) {
+    //   difficulty = difficulty * 2;
+    // }
+    // return Math.min(difficulty, cap);
   }
 
   private calcDeckung(): number {
@@ -44,23 +51,29 @@ export class FernkampfCalculatorService {
 
   private calcSteilschuss(): number {
     if (!this.valueStore.isSteilschuss) return 0;
-    if (this.valueStore.waffentyp === WaffenTyp.Wurfwaffe) {
-      return this.lookupTables.getSteilwurfValue(this.valueStore.steilwurf);
-    } else {
-      return this.lookupTables.getSteilschussValue(this.valueStore.steilschuss);
-    }
+    let difficulty = this.lookupTables.getSteilschussValue(this.valueStore.steilschuss);
+    let waffe = this.valueStore.waffentyp;
+    return this.STEILSCHUSSPIPE.transform(difficulty, waffe);
+    // if (this.valueStore.waffentyp === WaffenTyp.Wurfwaffe) {
+    //   return this.lookupTables.getSteilwurfValue(this.valueStore.steilwurf);
+    // } else {
+    //   return this.lookupTables.getSteilschussValue(this.valueStore.steilschuss);
+    // }
   }
 
   private calcReitenDifficulty(): number {
     if (!this.valueStore.hasReittier) return 0;
-    let multi: number = this.valueStore.berittenerschuetze ? 2.0 : 1.0;
-    let difficulty: number = this.lookupTables.getReitenSchussValue(this.valueStore.reitbewegung);
-    if (this.valueStore.reitOhneSattel) { difficulty += 4 }
-    if (this.valueStore.waffentyp === WaffenTyp.Wurfwaffe) { difficulty = Math.ceil(difficulty / 2); }
-    // Armbrust & Torsionswaffen haben keinen Aufschlag für Schüsse von stationären Reittieren
-    else if (this.valueStore.waffentyp === WaffenTyp.Armbrust &&
-      difficulty === this.lookupTables.getReitenSchussValue(0)) { difficulty -= this.lookupTables.getReitenSchussValue(0); }
-    return Math.ceil(difficulty / multi);
+    let difficulty = this.lookupTables.getReitenSchussValue(this.valueStore.reitbewegung);
+    let waffe = this.valueStore.waffentyp;
+    return this.REITENPIPE.transform(difficulty, waffe);
+    // let multi: number = this.valueStore.berittenerschuetze ? 2.0 : 1.0;
+    // let difficulty: number = this.lookupTables.getReitenSchussValue(this.valueStore.reitbewegung);
+    // if (this.valueStore.reitOhneSattel) { difficulty += 4 }
+    // if (this.valueStore.waffentyp === WaffenTyp.Wurfwaffe) { difficulty = Math.ceil(difficulty / 2); }
+    // // Armbrust & Torsionswaffen haben keinen Aufschlag für Schüsse von stationären Reittieren
+    // else if (this.valueStore.waffentyp === WaffenTyp.Armbrust &&
+    //   difficulty === this.lookupTables.getReitenSchussValue(0)) { difficulty -= this.lookupTables.getReitenSchussValue(0); }
+    // return Math.ceil(difficulty / multi);
   }
 
   private getEntfernungsinn(): number {
