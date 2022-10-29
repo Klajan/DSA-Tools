@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, PipeTransform } from '@angular/core';
 import { MatSliderChange } from '@angular/material/slider';
 
 @Component({
@@ -21,8 +21,14 @@ export class MappedSliderComponent implements OnInit {
     this.updateValues(value);
   }
   @Output() sliderValueChange = new EventEmitter<number>();
-  @Input() title: string|null = null
-
+  @Input() title: string|null = null;
+  @Input() valuePipe: PipeTransform|null = null;
+    private _valuePipeParam: unknown = undefined;
+    @Input()
+  public set valuePipeParam(value: unknown) {
+    this._valuePipeParam = value;
+    this.updateValues(this._sliderValue);
+  }
   @Output() selectedValueChange = new EventEmitter<number>();
   @Output() selectedNameChange = new EventEmitter<string>();
 
@@ -45,14 +51,20 @@ export class MappedSliderComponent implements OnInit {
     return Math.min(Math.max(index, 0), this.items.length - 1);
   }
 
+  private applyPipe(value: number) {
+    return this.valuePipe !== null ?
+      this.valuePipe.transform(value, this._valuePipeParam) :
+      value;
+  }
+
   private updatePreview(value: number) {
     let index = this.capIndex(value);
     this.previewName = this._items[index].name;
-    this.previewValue = this._items[index].value;
+    this.previewValue = this.applyPipe(this._items[index].value);
   }
   private updateValues(value: number) {
     let index = this.capIndex(value);
-    this.selectedValueChange.emit(this._items[index].value);
+    this.selectedValueChange.emit(this.applyPipe(this._items[index].value));
     this.selectedNameChange.emit(this._items[index].name);
     this.updatePreview(index);
   }
@@ -67,7 +79,7 @@ export class MappedSliderComponent implements OnInit {
   }
 
   formatThumb = ((value: number) => {
-    return this._items[this.capIndex(value)].value;
+    return this.applyPipe(this._items[this.capIndex(value)].value);
   }).bind(this);
 
 }
