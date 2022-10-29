@@ -23,10 +23,10 @@ export class MappedSliderComponent implements OnInit {
   @Output() sliderValueChange = new EventEmitter<number>();
   @Input() title: string|null = null;
   @Input() valuePipe: PipeTransform|null = null;
-    private _valuePipeParam: unknown = undefined;
-    @Input()
-  public set valuePipeParam(value: unknown) {
-    this._valuePipeParam = value;
+    private _valuePipeParams: Array<unknown> = [];
+  @Input()
+  public set valuePipeParams(value: Array<unknown>) {
+    this._valuePipeParams = value;
     this.updateValues(this._sliderValue);
   }
   @Output() selectedValueChange = new EventEmitter<number>();
@@ -53,7 +53,7 @@ export class MappedSliderComponent implements OnInit {
 
   private applyPipe(value: number) {
     return this.valuePipe !== null ?
-      this.valuePipe.transform(value, this._valuePipeParam) :
+      this.valuePipe.transform(value, ...this._valuePipeParams) :
       value;
   }
 
