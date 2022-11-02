@@ -24,7 +24,17 @@ import { trigger, state, style, animate, transition } from '@angular/animations'
 export class ToggleCollapsableComponent implements OnInit {
 
   state: string = "hidden";
-  @Input() enabled: boolean = false;
+  
+  private _enabled: boolean = false;
+  public get enabled(): boolean {
+    return this._enabled;
+  }
+  @Input()
+  public set enabled(value: boolean) {
+    this._enabled = value;
+    this.changeState(value);
+    this.enabledChange.emit(value)
+  }
   @Output() enabledChange = new EventEmitter<boolean>();
   @Input() label: string = "empty";
 
@@ -35,9 +45,13 @@ export class ToggleCollapsableComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  private changeState(value: boolean) {
+    this.hidden = !value;
+    this.state = (value ? 'shown' : 'hidden');
+  }
+
   onToggleChange(event: MatSlideToggleChange) {
-    this.hidden = !event.checked;
-    this.state = (this.state === 'hidden' ? 'shown' : 'hidden');
+    this.enabled = event.checked;
   }
 
 }
