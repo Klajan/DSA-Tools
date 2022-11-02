@@ -21,7 +21,5 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
-        npm config get production 
-        npm config set -g production false 
         npm install
         npm run ng -- deploy --base-href=/DSA-Tools/ --name="Klajan" --email="48261494+Klajan@users.noreply.github.com" --no-silent
