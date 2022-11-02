@@ -20,16 +20,16 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'DSA-Tools-web'`, () => {
+  it(`should have as title 'DSA-Tools'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('DSA-Tools-web');
+    expect(app.title).toEqual('DSA-Tools');
   });
 
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain('DSA-Tools-web app is running!');
+    expect(compiled.querySelector('.content span')?.textContent).toContain('DSA-Tools app is running!');
   });
 });
