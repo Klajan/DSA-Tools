@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { WaffenTyp } from './types-fernkampf';
 
 export type LookupTable = Array<{ name: string, value: number, comment?: string }>;
 
@@ -96,7 +97,6 @@ export class FernkampfTabellenService {
   ];
 
   private static readonly _wind: LookupTable = [
-    { name: 'Normal', value: 0 },
     { name: 'böiger Seitenwind', value: +4 },
     { name: 'starker, böiger Seitenwind', value: +8 },
   ];
@@ -114,6 +114,14 @@ export class FernkampfTabellenService {
   ];
   private static readonly _defaultSteilwurfIndex = 0;
 
+  private static readonly _waffentypen: LookupTable = [
+    { name: 'Wurfwaffen', value: WaffenTyp.Wurfwaffe },
+    { name: 'Bogen', value: WaffenTyp.Bogen },
+    { name: 'Armburst', value: WaffenTyp.Armbrust },
+    { name: 'Schleuder', value: WaffenTyp.Schleuder },
+    { name: 'Blasrohr', value: WaffenTyp.Blasrohr },
+  ]
+
   get distanz() { return FernkampfTabellenService._distanz; }
   get licht() { return FernkampfTabellenService._lichtAdvanced; }
   get sicht() { return FernkampfTabellenService._sicht; }
@@ -125,6 +133,7 @@ export class FernkampfTabellenService {
   get steilwurf() { return FernkampfTabellenService._steilwurf; } //deprecated
   get reitenSchuss() { return FernkampfTabellenService._reitbewegungSchuss; }
   get reitenWurf() { return FernkampfTabellenService._reitbewegungWurf; } //deprecated
+  get waffenTypen() { return FernkampfTabellenService._waffentypen; }
   
   getAll() {
     return {
@@ -152,7 +161,6 @@ export class FernkampfTabellenService {
       deckung: FernkampfTabellenService._defaultDeckungIndex,
       wind: FernkampfTabellenService._defaultWindIndex,
       steilschuss: FernkampfTabellenService._defaultSteilschussIndex,
-      steilwurf: FernkampfTabellenService._defaultSteilwurfIndex,
       reitenBewegung: FernkampfTabellenService._defaultReitbewegungIndex,
     }
   }
