@@ -14,7 +14,9 @@ export class FernkampfCalculatorService {
   private readonly REITENPIPE = new DifficultyPipes.ReitDifficultyPipe();
 
   private _difficulty: number = 0;
-  get difficulty() { return this._difficulty; }
+  public get difficulty() { return this._difficulty; }
+  private set difficulty( value: number) { this._difficulty = value; } 
+  
 
   constructor(
     private lookupTables: FernkampfTabellenService,
@@ -113,12 +115,13 @@ export class FernkampfCalculatorService {
       this.getSchnellschuss() +
       Math.max(0, this.valueStore.ansage) +
       Math.min(0, Math.max(-4, this.valueStore.zielen)) +
-      this.getZweiteAT();
+      this.getZweiteAT() +
+      this.valueStore.misc;
   }
 
   protected onNotifyValuesChanged = (() => {
     this.calculateDifficulty();
-    console.log(this._difficulty);
+    //console.debug(this._difficulty);
   }).bind(this);
 
 }
