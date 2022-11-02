@@ -12,7 +12,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatExpansionModule } from '@angular/material/expansion';
-
+import { FormsModule } from '@angular/forms';
+import { MatSelectModule } from '@angular/material/select';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -33,7 +34,7 @@ import { ToggleCollapsableComponent } from './toggle-collapsable/toggle-collapsa
     MappedSliderComponent,
     ResultFernComponent,
     NumericInputComponent,
-    ToggleCollapsableComponent
+    ToggleCollapsableComponent,
   ],
   imports: [
     BrowserModule,
@@ -52,6 +53,8 @@ import { ToggleCollapsableComponent } from './toggle-collapsable/toggle-collapsa
     MatFormFieldModule,
     MatSlideToggleModule,
     MatExpansionModule,
+    FormsModule,
+    MatSelectModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

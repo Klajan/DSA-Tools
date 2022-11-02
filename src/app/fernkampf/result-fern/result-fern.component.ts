@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
 import { NumericInputComponent } from 'src/app/numeric-input/numeric-input.component';
+import { FernkampfCalculatorService } from '../fernkampf-calculator.service';
+import { ValueStoreFernService } from '../value-store-fern.service';
 
 @Component({
   selector: 'app-result-fern',
@@ -9,9 +11,15 @@ import { NumericInputComponent } from 'src/app/numeric-input/numeric-input.compo
 })
 export class ResultFernComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    protected valueStore: ValueStoreFernService,
+    protected calcService: FernkampfCalculatorService
+    ) { }
 
   ngOnInit(): void {
+    this.calcService.calculateDifficulty();
   }
+
+  reset(){this.valueStore.resetToDefaults();}
 
 }

@@ -1,7 +1,146 @@
 <app-result-fern></app-result-fern>
-<app-toggle-collapsable title="Deckung"><app-mapped-slider [items]="lookupTable.deckung" [(sliderValue)]="valueStore.deckung"></app-mapped-slider></app-toggle-collapsable>
-<app-mapped-slider [items]="lookupTable.distanz" title="Entfernung" [(sliderValue)]="valueStore.distanz"></app-mapped-slider>
-<app-mapped-slider [items]="lookupTable.bewegung" title="Bewegung" [(sliderValue)]="valueStore.bewegung"></app-mapped-slider>
-<app-mapped-slider [items]="lookupTable.ziel" title="Größe" [(sliderValue)]="valueStore.ziel"></app-mapped-slider>
-<app-mapped-slider [items]="lookupTable.licht" title="Licht" [(sliderValue)]="valueStore.licht"></app-mapped-slider>
-<app-mapped-slider [items]="lookupTable.sicht" title="Sicht" [(sliderValue)]="valueStore.sicht"></app-mapped-slider>
+<div class="p-1">
+    <mat-expansion-panel>
+        <mat-expansion-panel-header>
+            <mat-panel-title>Ansagen</mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col">
+                    <mat-form-field  appearance="outline" floatLabel="always">
+                        <mat-label>Ansage</mat-label>
+                        <input matInput name="ansage" type="number" min="0" max="32" placeholder="0" [(ngModel)]="valueStore.ansage">
+                      </mat-form-field>
+                </div>
+                <div class="col">
+                    <mat-form-field appearance="outline" floatLabel="always">
+                        <mat-label>Zielen</mat-label>
+                        <input matInput name="zielen" type="number" min="-4" max="0" placeholder="0" [(ngModel)]="valueStore.zielen">
+                      </mat-form-field>
+                </div>
+                <div class="col">
+                    <mat-form-field appearance="outline" floatLabel="always">
+                        <mat-label>Misc</mat-label>
+                        <input matInput name="misc" type="number" placeholder="0" [(ngModel)]="valueStore.misc">
+                      </mat-form-field>
+                </div>
+                <div class="col mb-2">
+                    <mat-slide-toggle [(ngModel)]="valueStore.schnellschuss">
+                        Schnellschuss
+                    </mat-slide-toggle>
+                </div>
+                <div class="col mb-2">
+                    <mat-slide-toggle [(ngModel)]="valueStore.zweiteAT">
+                        Zweite AT in KR
+                    </mat-slide-toggle>
+                </div>
+            </div>
+        </div>
+    </mat-expansion-panel>
+    <app-mapped-slider [items]="lookupTable.distanz" title="Entfernung" [(sliderValue)]="valueStore.distanz"></app-mapped-slider>
+    <app-mapped-slider [items]="lookupTable.bewegung" title="Zielbewegung" [(sliderValue)]="valueStore.bewegung"></app-mapped-slider>
+    <app-mapped-slider [items]="lookupTable.ziel" title="Zielgröße" [(sliderValue)]="valueStore.ziel"></app-mapped-slider>
+    <app-mapped-slider [items]="lookupTable.licht" title="Licht" [(sliderValue)]="valueStore.licht" [valuePipe]="LichtPipe" [valuePipeParam]="[valueStore.lichtVorteil]"></app-mapped-slider>
+    <app-mapped-slider [items]="lookupTable.sicht" title="Sichtverhältnisse" [(sliderValue)]="valueStore.sicht"></app-mapped-slider>
+    <mat-expansion-panel class="p-0">
+        <mat-expansion-panel-header>
+            <mat-panel-title>Zusätzliche Einstellungen</mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="m-0 p-0">
+            <app-toggle-collapsable label="Gegner in Deckung" [(enabled)]="valueStore.hasDeckung">
+                <app-mapped-slider [items]="lookupTable.deckung" [(sliderValue)]="valueStore.deckung"></app-mapped-slider>
+            </app-toggle-collapsable>
+            <app-toggle-collapsable label="Seitenwind" [(enabled)]="valueStore.isWind">
+                <app-mapped-slider [items]="lookupTable.wind" [(sliderValue)]="valueStore.wind"></app-mapped-slider>
+            </app-toggle-collapsable>
+            <app-toggle-collapsable label="Steilschuß" [(enabled)]="valueStore.isSteilschuss">
+                <app-mapped-slider [items]="lookupTable.steilschuss" [(sliderValue)]="valueStore.steilschuss" [valuePipe]="SteilschussPipe" [valuePipeParam]="[valueStore.waffentyp]"></app-mapped-slider>
+            </app-toggle-collapsable>
+            <app-toggle-collapsable label="Berittener Fernkampf" [(enabled)]="valueStore.hasReittier">
+                <app-mapped-slider [items]="lookupTable.reitenSchuss" [(sliderValue)]="valueStore.reitbewegung" [valuePipe]="ReitenPipe" [valuePipeParam]="[valueStore.waffentyp, valueStore.berittenerschuetze]"></app-mapped-slider>
+                <mat-slide-toggle class="mx-1" [(ngModel)]="valueStore.reitOhneSattel">
+                    Kein Sattel und Steigbügel
+                </mat-slide-toggle>
+            </app-toggle-collapsable>
+        </div>
+    </mat-expansion-panel>
+    <mat-expansion-panel>
+        <mat-expansion-panel-header>
+            <mat-label>Charakter</mat-label>
+        </mat-expansion-panel-header>
+        <div class="container">
+            <div class="row my-2">
+                <div class="col my-0 py-0">
+                    <mat-form-field class="my-0 py-0" appearance="outline">
+                        <mat-label>Waffenart</mat-label>
+                        <mat-select [(value)]="valueStore.waffentyp">
+                          <mat-option *ngFor="let types of lookupTable.waffenTypen" [value]="types.value">
+                            {{types.name}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                </div>
+            </div>
+            <mat-divider></mat-divider>
+            <div class="row my-2">
+                <div class="col">
+                    <mat-slide-toggle [(ngModel)]="valueStore.daemmersicht">
+                        Dämmerungssicht
+                    </mat-slide-toggle>
+                </div>
+                <div class="col">
+                    <mat-slide-toggle [(ngModel)]="valueStore.nachtsicht">
+                        Nachtsicht
+                    </mat-slide-toggle>
+                </div>
+                <div class="col">
+                    <mat-slide-toggle [(ngModel)]="valueStore.nachtblind">
+                        Nachtblind
+                    </mat-slide-toggle>
+                </div>
+            </div>
+            <mat-divider></mat-divider>
+            <div class="row my-2">
+                <div class="col">
+                    <mat-slide-toggle [(ngModel)]="valueStore.entfernungsinn">
+                        Entfernungsinn
+                    </mat-slide-toggle>
+                </div>
+                <div class="col">
+                    <mat-slide-toggle [(ngModel)]="valueStore.einaeugig" disabled>
+                        Einäugig
+                    </mat-slide-toggle>
+                </div>
+                <div class="col">
+                    <mat-slide-toggle [(ngModel)]="valueStore.farbenblind" disabled>
+                        Farbenblind
+                    </mat-slide-toggle>
+                </div>
+            </div>
+            <mat-divider></mat-divider>
+            <div class="row my-2">
+                <div class="col">
+                    <mat-slide-toggle [(ngModel)]="valueStore.scharfschuetze">
+                        Scharfschütze
+                    </mat-slide-toggle>
+                </div>
+                <div class="col">
+                    <mat-slide-toggle [(ngModel)]="valueStore.meisterschuetze">
+                        Meisterschütze
+                    </mat-slide-toggle>
+                </div>
+                <div class="col">
+                    <mat-slide-toggle [(ngModel)]="valueStore.schnellladen">
+                        Schnellladen
+                    </mat-slide-toggle>
+                </div>
+                <div class="col">
+                    <mat-slide-toggle [(ngModel)]="valueStore.berittenerschuetze">
+                        Berittener Schütze
+                    </mat-slide-toggle>
+                </div>
+            </div>
+        </div>
+    </mat-expansion-panel>
+</div>
+
