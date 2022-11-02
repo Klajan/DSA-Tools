@@ -8,8 +8,6 @@ import { WaffenTyp, Scharfschütze, LichtVorteil } from './types-fernkampf'
 })
 export class ValueStoreFernService {
 
-  waffentyp: WaffenTyp = WaffenTyp.Wurfwaffe;
-
   public notifyValuesChanged = new Subject<void>();
   get notifyValuesChanged_() { return this.notifyValuesChanged.asObservable(); }
 
@@ -27,6 +25,16 @@ export class ValueStoreFernService {
     zielen: 0,
     misc: 0,
     toggles: false,
+  }
+
+  private _waffentyp: WaffenTyp = WaffenTyp.Wurfwaffe;
+  public get waffentyp(): WaffenTyp {
+    return this._waffentyp;
+  }
+  public set waffentyp(value: WaffenTyp) {
+    if (this._waffentyp === value) return;
+    this._waffentyp = value;
+    this.notifyValuesChanged.next();
   }
 
   // Tabellen Werte
