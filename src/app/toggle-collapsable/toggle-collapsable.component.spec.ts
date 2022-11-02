@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { ToggleCollapsableComponent } from './toggle-collapsable.component';
 
@@ -8,7 +9,7 @@ describe('ToggleCollapsableComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ToggleCollapsableComponent ]
+      declarations: [ ToggleCollapsableComponent ], imports: [ BrowserAnimationsModule ],
     })
     .compileComponents();
 
