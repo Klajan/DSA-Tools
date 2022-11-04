@@ -1,15 +1,13 @@
 import { Injectable } from '@angular/core';
-import { Subject, Observable } from 'rxjs';
 
-import { WaffenTyp, Scharfschütze, LichtVorteil } from './types-fernkampf'
+import { BaseValueStore } from '../base-value-store';
+import { LichtVorteil, Scharfschütze, WaffentypFern as WaffenTyp } from '../types/char-enums';
+import { LocalStorageService } from '../local-storage.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ValueStoreFernService {
-
-  public notifyValuesChanged = new Subject<void>();
-  get notifyValuesChanged_() { return this.notifyValuesChanged.asObservable(); }
+export class ValueStoreFernService extends BaseValueStore {
 
   private static readonly RESET = {
     distanz: 1,
@@ -34,7 +32,7 @@ export class ValueStoreFernService {
   public set waffentyp(value: WaffenTyp) {
     if (this._waffentyp === value) return;
     this._waffentyp = value;
-    this.notifyValuesChanged.next();
+    this.valuesChanged();
   }
 
   // Tabellen Werte
@@ -45,7 +43,7 @@ export class ValueStoreFernService {
   public set distanz(value: number) {
     if (this._distanz === value) return;
     this._distanz = value;
-    this.notifyValuesChanged.next();
+    this.valuesChanged();
   }
 
   private _licht: number = 0;
@@ -55,7 +53,7 @@ export class ValueStoreFernService {
   public set licht(value: number) {
     if (this._licht === value) return;
     this._licht = value;
-    this.notifyValuesChanged.next();
+    this.valuesChanged();
   }
 
   private _sicht: number = 0;
@@ -65,7 +63,7 @@ export class ValueStoreFernService {
   public set sicht(value: number) {
     if (this._sicht === value) return;
     this._sicht = value;
-    this.notifyValuesChanged.next();
+    this.valuesChanged();
   }
 
   private _bewegung: number = 2;
@@ -75,18 +73,17 @@ export class ValueStoreFernService {
   public set bewegung(value: number) {
     if (this._bewegung === value) return;
     this._bewegung = value;
-    this.notifyValuesChanged.next();
+    this.valuesChanged();
   }
 
   private _ziel: number = 3;
-  zielChange = new Subject<number>();
   public get ziel(): number {
     return this._ziel;
   }
   public set ziel(value: number) {
     if (this._ziel === value) return;
     this._ziel = value;
-    this.notifyValuesChanged.next();
+    this.valuesChanged();
   }
   // Deckung
   private _hasDeckung: boolean = false;
@@ -96,7 +93,7 @@ export class ValueStoreFernService {
   public set hasDeckung(value: boolean) {
     if (this._hasDeckung === value) return;
     this._hasDeckung = value;
-    this.notifyValuesChanged.next();
+    this.valuesChanged();
   }
 
   private _deckung: number = 0;
@@ -106,7 +103,7 @@ export class ValueStoreFernService {
   public set deckung(value: number) {
     if (this._deckung === value) return;
     this._deckung = value;
-    this.notifyValuesChanged.next();
+    this.valuesChanged();
   }
   // Wind
   private _isWind: boolean = false;
@@ -116,7 +113,7 @@ export class ValueStoreFernService {
   public set isWind(value: boolean) {
     if (this._isWind === value) return;
     this._isWind = value;
-    this.notifyValuesChanged.next();
+    this.valuesChanged();
   }
 
   private _wind: number = 0;
@@ -126,7 +123,7 @@ export class ValueStoreFernService {
   public set wind(value: number) {
     if (this._wind === value) return;
     this._wind = value;
-    this.notifyValuesChanged.next();
+    this.valuesChanged();
   }
   // Steilschuss/Wurf
   private _isSteilschuss: boolean = false;
@@ -136,7 +133,7 @@ export class ValueStoreFernService {
   public set isSteilschuss(value: boolean) {
     if (this._isSteilschuss === value) return;
     this._isSteilschuss = value;
-    this.notifyValuesChanged.next();
+    this.valuesChanged();
   }
 
   private _steilschuss: number = 0;
@@ -146,7 +143,7 @@ export class ValueStoreFernService {
   public set steilschuss(value: number) {
     if (this._steilschuss === value) return;
     this._steilschuss = value;
-    this.notifyValuesChanged.next();
+    this.valuesChanged();
   }
 
   private _steilwurf: number = 0;
@@ -156,7 +153,7 @@ export class ValueStoreFernService {
   public set steilwurf(value: number) {
     if (this._steilwurf === value) return;
     this._steilwurf = value;
-    this.notifyValuesChanged.next();
+    this.valuesChanged();
   }
 
   // Reittier
@@ -167,7 +164,7 @@ export class ValueStoreFernService {
   public set hasReittier(value: boolean) {
     if (this._hasReittier === value) return;
     this._hasReittier = value;
-    this.notifyValuesChanged.next();
+    this.valuesChanged();
   }
   private _reitbewegung: number = 0;
   public get reitbewegung(): number {
@@ -176,7 +173,7 @@ export class ValueStoreFernService {
   public set reitbewegung(value: number) {
     if (this._reitbewegung === value) return;
     this._reitbewegung = value;
-    this.notifyValuesChanged.next();
+    this.valuesChanged();
   }
   private _reitOhneSattel: boolean = false;
   public get reitOhneSattel(): boolean {
@@ -185,7 +182,7 @@ export class ValueStoreFernService {
   public set reitOhneSattel(value: boolean) {
     if (this._reitOhneSattel === value) return;
     this._reitOhneSattel = value;
-    this.notifyValuesChanged.next();
+    this.valuesChanged();
   }
 
   // Ansagen
@@ -197,7 +194,7 @@ export class ValueStoreFernService {
   public set ansage(value: number) {
     if (this._ansage === value) return;
     this._ansage = Math.max(Math.min(value, this._MAX_ANSAGE), 0);
-    this.notifyValuesChanged.next();
+    this.valuesChanged();
   }
 
   private readonly _MAX_ZIELEN = -4;
@@ -208,7 +205,7 @@ export class ValueStoreFernService {
   public set zielen(value: number) {
     if (this._zielen === value) return;
     this._zielen = Math.min(Math.max(value, this._MAX_ZIELEN), 0);
-    this.notifyValuesChanged.next();
+    this.valuesChanged();
   }
   private _misc: number = 0;
   public get misc(): number {
@@ -217,7 +214,7 @@ export class ValueStoreFernService {
   public set misc(value: number) {
     if (this._misc === value) return;
     this._misc = value;
-    this.notifyValuesChanged.next();
+    this.valuesChanged();
   }
   private _schnellschuss: boolean = false;
   public get schnellschuss(): boolean {
@@ -226,7 +223,7 @@ export class ValueStoreFernService {
   public set schnellschuss(value: boolean) {
     if (this._schnellschuss === value) return;
     this._schnellschuss = value;
-    this.notifyValuesChanged.next();
+    this.valuesChanged();
   }
 
   //<-----This should be saved and persistant----->
@@ -238,7 +235,7 @@ export class ValueStoreFernService {
   public set lichtVorteil(value: LichtVorteil) {
     if (this._lichtVorteil === value) return;
     this._lichtVorteil = value;
-    this.notifyValuesChanged.next();
+    this.valuesChanged();
   }
 
   get nachtsicht() {
@@ -247,7 +244,7 @@ export class ValueStoreFernService {
   set nachtsicht(value: boolean) {
     if (this.nachtsicht === value) return;
     this._lichtVorteil = value ? LichtVorteil.Nachtsicht : LichtVorteil.None;
-    this.notifyValuesChanged.next();
+    this.valuesChanged();
   }
 
   get daemmersicht() {
@@ -256,7 +253,7 @@ export class ValueStoreFernService {
   set daemmersicht(value: boolean) {
     if (this.daemmersicht === value) return;
     this._lichtVorteil = value ? LichtVorteil.Dämmerungssicht : LichtVorteil.None;
-    this.notifyValuesChanged.next();
+    this.valuesChanged();
   }
 
   public get nachtblind(): boolean {
@@ -265,7 +262,7 @@ export class ValueStoreFernService {
   public set nachtblind(value: boolean) {
     if (this.nachtblind === value) return;
     this._lichtVorteil = value ? LichtVorteil.Nachtblind : LichtVorteil.None;
-    this.notifyValuesChanged.next();
+    this.valuesChanged();
   }
 
   private _entfernungsinn: boolean = false;
@@ -275,7 +272,7 @@ export class ValueStoreFernService {
   public set entfernungsinn(value: boolean) {
     if (this._entfernungsinn === value) return;
     this._entfernungsinn = value;
-    this.notifyValuesChanged.next();
+    this.valuesChanged();
   }
 
   private _einaeugig: boolean = false;
@@ -285,7 +282,7 @@ export class ValueStoreFernService {
   public set einaeugig(value: boolean) {
     if (this._einaeugig === value) return;
     this._einaeugig = value;
-    this.notifyValuesChanged.next();
+    this.valuesChanged();
   }
 
   private _farbenblind: boolean = false;
@@ -295,7 +292,7 @@ export class ValueStoreFernService {
   public set farbenblind(value: boolean) {
     if (this._farbenblind === value) return;
     this._farbenblind = value;
-    this.notifyValuesChanged.next();
+    this.valuesChanged();
   }
 
   private _kurzsichtig: boolean = false;
@@ -305,7 +302,7 @@ export class ValueStoreFernService {
   public set kurzsichtig(value: boolean) {
     if (this._kurzsichtig === value) return;
     this._kurzsichtig = value;
-    this.notifyValuesChanged.next();
+    this.valuesChanged();
   }
 
   // Sonderfertigkeiten
@@ -323,7 +320,7 @@ export class ValueStoreFernService {
   public set scharfschuetze(value: boolean) {
     if (this.scharfschuetze === value) return;
     this._scharfschütze = value ? Scharfschütze.Scharfschütze : Scharfschütze.None;
-    this.notifyValuesChanged.next();
+    this.valuesChanged();
   }
 
   public get meisterschuetze(): boolean {
@@ -332,7 +329,7 @@ export class ValueStoreFernService {
   public set meisterschuetze(value: boolean) {
     if (this.meisterschuetze === value) return;
     this._scharfschütze = value ? Scharfschütze.Meisterschütze : Scharfschütze.None;
-    this.notifyValuesChanged.next();
+    this.valuesChanged();
   }
 
   private _schnellladen: boolean = false;
@@ -342,7 +339,7 @@ export class ValueStoreFernService {
   public set schnellladen(value: boolean) {
     if (this._schnellladen === value) return;
     this._schnellladen = value;
-    this.notifyValuesChanged.next();
+    this.valuesChanged();
   }
 
   private _schnellziehen: boolean = false;
@@ -352,7 +349,7 @@ export class ValueStoreFernService {
   public set schnellziehen(value: boolean) {
     if (this._schnellziehen === value) return;
     this._schnellziehen = value;
-    this.notifyValuesChanged.next();
+    this.valuesChanged();
   }
 
   private _eisenhagel: boolean = false;
@@ -362,7 +359,7 @@ export class ValueStoreFernService {
   public set eisenhagel(value: boolean) {
     if (this.eisenhagel === value) return;
     this._eisenhagel = value;
-    this.notifyValuesChanged.next();
+    this.valuesChanged();
   }
 
   private _berittenerschuetze: boolean = false;
@@ -372,7 +369,7 @@ export class ValueStoreFernService {
   public set berittenerschuetze(value: boolean) {
     if (this._berittenerschuetze === value) return;
     this._berittenerschuetze = value;
-    this.notifyValuesChanged.next();
+    this.valuesChanged();
   }
   //<-----This should be saved and persistant-----/>
 
@@ -384,10 +381,50 @@ export class ValueStoreFernService {
   public set zweiteAT(value: boolean) {
     if (this._zweiteAT === value) return;
     this._zweiteAT = value;
-    this.notifyValuesChanged.next();
+    this.valuesChanged();
   }
 
-  constructor() { }
+  constructor(
+    private localStorage: LocalStorageService,
+    ) {
+    super();
+    
+    localStorage.register("value-store-v0", this.getForStore.bind(this))
+      .then((value) => {
+        this.setFromLocal(value as ReturnType<ValueStoreFernService['getForStore']>);
+      });
+  }
+
+  private getForStore() {
+    return {
+      waffentyp: this.waffentyp,
+      lichtVorteil: this.lichtVorteil,
+      entfernungsinn: this.entfernungsinn,
+      einaeugig: this.einaeugig,
+      farbenblind: this.farbenblind,
+      kurzsichtig: this.kurzsichtig,
+      scharfschuetzeEnum: this.scharfschuetzeEnum,
+      schnellladen: this.schnellladen,
+      schnellziehen: this.schnellziehen,
+      eisenhagel: this.eisenhagel,
+      berittenerschuetze: this.berittenerschuetze,
+    }
+  }
+
+  private setFromLocal(object: ReturnType<ValueStoreFernService['getForStore']> | null) {
+    if (object === null) return;
+    this.waffentyp = object.waffentyp;
+    this.lichtVorteil = object.lichtVorteil;
+    this.entfernungsinn = object.entfernungsinn;
+    this.einaeugig = object.entfernungsinn;
+    this.farbenblind = object.farbenblind;
+    this.kurzsichtig = object.kurzsichtig;
+    this.scharfschuetzeEnum = object.scharfschuetzeEnum;
+    this.schnellladen = object.schnellladen;
+    this.schnellziehen = object.schnellziehen;
+    this.eisenhagel = object.eisenhagel;
+    this.berittenerschuetze = object.berittenerschuetze;
+  }
 
   public resetToDefaults() {
     console.debug("RESETTING");
@@ -410,7 +447,7 @@ export class ValueStoreFernService {
     this._zielen = ValueStoreFernService.RESET.zielen;
     this._misc = ValueStoreFernService.RESET.misc;
     this._zweiteAT = ValueStoreFernService.RESET.toggles;
-    this.notifyValuesChanged.next();
+    this.valuesChanged();
   }
 
 }

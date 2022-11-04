@@ -1,14 +1,14 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { WaffenTyp, LichtVorteil, Scharfschütze } from '../types-fernkampf';
+import { LichtVorteil, Scharfschütze, WaffentypFern as Waffentyp } from 'src/app/types/char-enums';
 
 @Pipe({
   name: 'steilschussDifficulty'
 })
 export class SteilschussDifficultyPipe implements PipeTransform {
 
-  transform(value: number, weapon: WaffenTyp = WaffenTyp.Bogen): number {
+  transform(value: number, weapon: Waffentyp = Waffentyp.Bogen): number {
     switch (weapon) {
-      case WaffenTyp.Wurfwaffe:
+      case Waffentyp.Wurfwaffe:
         //return +2/+8 insted of +2/+4)
         return value !== 2 ? value * 2 : value;
         break;
@@ -24,13 +24,13 @@ export class SteilschussDifficultyPipe implements PipeTransform {
 })
 export class ReitDifficultyPipe implements PipeTransform {
 
-  transform(value: number, weapon: WaffenTyp = WaffenTyp.Bogen, berittenerschütze: boolean = false): number {
+  transform(value: number, weapon: Waffentyp = Waffentyp.Bogen, berittenerschütze: boolean = false): number {
     let difficulty;
     switch (weapon) {
-      case WaffenTyp.Wurfwaffe:
+      case Waffentyp.Wurfwaffe:
         difficulty = Math.ceil(value / 2);
         break;
-      case WaffenTyp.Armbrust:
+      case Waffentyp.Armbrust:
         difficulty = value === 2 ? 0 : value;
         break;
       default:
@@ -86,10 +86,10 @@ export class SchnellschussDifficultyPipe implements PipeTransform {
 })
 export class ZweiteATDifficultyPipe implements PipeTransform {
 
-  transform(value: boolean, weapon: WaffenTyp = WaffenTyp.Bogen): number {
+  transform(value: boolean, weapon: Waffentyp = Waffentyp.Bogen): number {
     if (!value) return 0;
     switch (weapon) {
-      case WaffenTyp.Wurfwaffe:
+      case Waffentyp.Wurfwaffe:
         return 2;
       default:
         return 4;
