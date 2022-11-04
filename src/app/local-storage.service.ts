@@ -11,7 +11,7 @@ export class LocalStorageService {
 
   private _registered: Map<string, Callback> = new Map<string, Callback>();
 
-  private readonly INTERVAL = 30000; //set repeat to 30s
+  private readonly INTERVAL = 15000; //set repeat to 15s
   private intervalID: NodeJS.Timer | null = null;
 
   constructor() { }

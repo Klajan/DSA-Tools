@@ -34,27 +34,21 @@ export class CharacterStoreService extends BaseValueStore {
     return this._lichtVorteil === LichtVorteil.Nachtsicht;
   }
   set nachtsicht(value: boolean) {
-    if (this.nachtsicht === value) return;
-    this._lichtVorteil = value ? LichtVorteil.Nachtsicht : LichtVorteil.None;
-    this.valuesChanged();
+    this.lichtVorteil = value ? LichtVorteil.Nachtsicht : LichtVorteil.None;
   }
 
   get daemmersicht() {
     return this._lichtVorteil === LichtVorteil.Dämmerungssicht;
   }
   set daemmersicht(value: boolean) {
-    if (this.daemmersicht === value) return;
-    this._lichtVorteil = value ? LichtVorteil.Dämmerungssicht : LichtVorteil.None;
-    this.valuesChanged();
+    this.lichtVorteil = value ? LichtVorteil.Dämmerungssicht : LichtVorteil.None;
   }
 
   public get nachtblind(): boolean {
     return this._lichtVorteil === LichtVorteil.Nachtblind;
   }
   public set nachtblind(value: boolean) {
-    if (this.nachtblind === value) return;
-    this._lichtVorteil = value ? LichtVorteil.Nachtblind : LichtVorteil.None;
-    this.valuesChanged();
+    this.lichtVorteil = value ? LichtVorteil.Nachtblind : LichtVorteil.None;
   }
 
   private _entfernungsinn: boolean = false;
@@ -103,25 +97,23 @@ export class CharacterStoreService extends BaseValueStore {
     return this._scharfschütze;
   }
   public set scharfschuetzeEnum(value: Scharfschütze) {
+    if (this._scharfschütze === value) return;
     this._scharfschütze = value;
+    this.valuesChanged();
   }
 
   public get scharfschuetze(): boolean {
     return this._scharfschütze === Scharfschütze.Scharfschütze;
   }
   public set scharfschuetze(value: boolean) {
-    if (this.scharfschuetze === value) return;
-    this._scharfschütze = value ? Scharfschütze.Scharfschütze : Scharfschütze.None;
-    this.valuesChanged();
+    this.scharfschuetzeEnum = value ? Scharfschütze.Scharfschütze : Scharfschütze.None;
   }
 
   public get meisterschuetze(): boolean {
     return this._scharfschütze === Scharfschütze.Meisterschütze;
   }
   public set meisterschuetze(value: boolean) {
-    if (this.meisterschuetze === value) return;
-    this._scharfschütze = value ? Scharfschütze.Meisterschütze : Scharfschütze.None;
-    this.valuesChanged();
+    this.scharfschuetzeEnum = value ? Scharfschütze.Meisterschütze : Scharfschütze.None;
   }
 
   private _schnellladen: boolean = false;
@@ -171,7 +163,7 @@ export class CharacterStoreService extends BaseValueStore {
       .then((value) => {
         this.setFromPersistence(value as ReturnType<CharacterStoreService['getPersistenceObject']>);
       });
-    console.debug(this.getPersistenceObject());
+    // console.debug(this.getPersistenceObject());
   }
 
   private getPersistenceObject() {
@@ -194,16 +186,32 @@ export class CharacterStoreService extends BaseValueStore {
 
   private setFromPersistence(object: ReturnType<CharacterStoreService['getPersistenceObject']> | null) {
     if (object === null) return;
-    this.waffentypFern = object.waffentypFern;
-    this.lichtVorteil = object.lichtVorteil;
-    this.entfernungsinn = object.entfernungsinn;
-    this.einaeugig = object.entfernungsinn;
-    this.farbenblind = object.farbenblind;
-    this.kurzsichtig = object.kurzsichtig;
-    this.scharfschuetzeEnum = object.scharfschuetzeEnum;
-    this.schnellladen = object.schnellladen;
-    this.schnellziehen = object.schnellziehen;
-    this.eisenhagel = object.eisenhagel;
-    this.berittenerschuetze = object.berittenerschuetze;
+    this._waffentypFern = object.waffentypFern;
+    this._lichtVorteil = object.lichtVorteil;
+    this._entfernungsinn = object.entfernungsinn;
+    this._einaeugig = object.entfernungsinn;
+    this._farbenblind = object.farbenblind;
+    this._kurzsichtig = object.kurzsichtig;
+    this._scharfschütze = object.scharfschuetzeEnum;
+    this._schnellladen = object.schnellladen;
+    this._schnellziehen = object.schnellziehen;
+    this._eisenhagel = object.eisenhagel;
+    this._berittenerschuetze = object.berittenerschuetze;
+    this.valuesChanged();
+  }
+
+  public resetToDefaults() {
+    this._waffentypFern = WaffentypFern.Wurfwaffe;
+    this._lichtVorteil = LichtVorteil.None;
+    this._entfernungsinn = false;
+    this._einaeugig = false;
+    this._farbenblind = false;
+    this._kurzsichtig = false;
+    this._scharfschütze = Scharfschütze.None;
+    this._schnellladen = false;
+    this._schnellziehen = false;
+    this._eisenhagel = false;
+    this._berittenerschuetze = false;
+    this.valuesChanged();
   }
 }
