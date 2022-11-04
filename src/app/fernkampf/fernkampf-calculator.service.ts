@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { FernkampfTabellenService } from './fernkampf-tabellen.service';
-import { WaffenTyp, LichtVorteil } from './types-fernkampf';
+import { WaffentypFern as Waffentyp } from '../types/char-enums';
 import { ValueStoreFernService } from './value-store-fern.service';
 import * as DifficultyPipes  from './pipes/fernkampf-difficulty.pipe';
 
@@ -89,7 +89,7 @@ export class FernkampfCalculatorService {
 
   private getZweiteAT(): number {
     if (!this.valueStore.zweiteAT) return 0;
-    if (this.valueStore.waffentyp === WaffenTyp.Wurfwaffe) return 2;
+    if (this.valueStore.waffentyp === Waffentyp.Wurfwaffe) return 2;
     return 4;
   }
 

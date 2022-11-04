@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 
-import { LichtVorteil } from '../types-fernkampf';
 import { FernkampfTabellenService } from '../fernkampf-tabellen.service';
 import { ValueStoreFernService } from '../value-store-fern.service';
 import { FernkampfCalculatorService } from '../fernkampf-calculator.service';

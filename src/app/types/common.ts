@@ -1,0 +1,1 @@
+export type LookupTable = Array<{ name: string, value: number, comment?: string }>;
