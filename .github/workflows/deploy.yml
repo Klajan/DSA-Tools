@@ -10,11 +10,11 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v3
       
-    - name: Run latest-tag
-      uses: EndBug/latest-tag@latest
+    - name: Bump version and push tag
+      id: tag_version
+      uses: mathieudutour/github-tag-action@v6.1
       with:
-        ref: latest
-        description: currently deployed version
+        github_token: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Use Node.js 18
       uses: actions/setup-node@v3
