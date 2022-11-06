@@ -198,6 +198,7 @@ export class CharacterStoreService extends BaseValueStore {
     this._eisenhagel = object.eisenhagel;
     this._berittenerschuetze = object.berittenerschuetze;
     this.valuesChanged();
+    this.hasChanged = false;
   }
 
   public resetToDefaults() {
