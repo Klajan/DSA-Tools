@@ -14,12 +14,12 @@ export class ResultFernComponent implements OnInit {
   constructor(
     protected valueStore: ValueStoreFernService,
     protected calcService: FernkampfCalculatorService
-    ) { }
+  ) { }
 
   ngOnInit(): void {
     this.calcService.calculateDifficulty();
   }
 
-  reset(){this.valueStore.resetToDefaults();}
+  reset() { this.valueStore.resetToDefaults(); }
 
 }
