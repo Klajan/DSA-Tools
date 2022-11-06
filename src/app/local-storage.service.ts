@@ -29,7 +29,7 @@ export class LocalStorageService {
   }
 
   private async saveItem(key: string, object: object | null) {
-    console.debug(object);
+    // console.debug(object);
     if (object === null) return;
     let jsonString = JSON.stringify(object);
     localStorage.setItem(key, jsonString);
