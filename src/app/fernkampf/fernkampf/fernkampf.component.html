@@ -47,7 +47,7 @@
         <!-- <div class="container-fluid p-0"> -->
         <div class="row">
             <div class="col-12 col-md-6 justify-content-center">
-                <app-mapped-slider [items]="lookupTable.distanz" title="Entfernung"
+                <app-mapped-slider [items]="lookupTable.distanz | appendRange: waffenTable.getWaffenOfType(valueStore.waffentyp)[valueStore.waffeFern].range" title="Entfernung"
                     [(sliderValue)]="valueStore.distanz">
                 </app-mapped-slider>
             </div>
@@ -124,6 +124,16 @@
                             </mat-select>
                         </mat-form-field>
                     </div>
+                    <div class="col my-0 py-0">
+                        <mat-form-field class="my-0 py-0" appearance="outline">
+                            <mat-label>Fernkampfwaffe</mat-label>
+                            <mat-select [(value)]="valueStore.waffeFern" >
+                                <mat-option *ngFor="let weapon of waffenTable.getWaffenOfType(valueStore.waffentyp); let i = index" [value]="i">
+                                    {{weapon.name}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
                 </div>
                 <mat-divider></mat-divider>
                 <div class="row my-2">
@@ -151,12 +161,12 @@
                         </mat-slide-toggle>
                     </div>
                     <div class="col">
-                        <mat-slide-toggle [(ngModel)]="valueStore.einaeugig" disabled>
+                        <mat-slide-toggle [(ngModel)]="valueStore.einaeugig">
                             Einäugig
                         </mat-slide-toggle>
                     </div>
                     <div class="col">
-                        <mat-slide-toggle [(ngModel)]="valueStore.farbenblind" disabled>
+                        <mat-slide-toggle [(ngModel)]="valueStore.farbenblind">
                             Farbenblind
                         </mat-slide-toggle>
                     </div>

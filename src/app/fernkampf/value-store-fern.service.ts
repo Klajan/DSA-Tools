@@ -341,6 +341,13 @@ export class ValueStoreFernService extends BaseValueStore {
   public set berittenerschuetze(value: boolean) {
     this.characterStore.berittenerschuetze = value;
   }
+
+  public get waffeFern(): number {
+    return this.characterStore.waffeFern;
+  }
+  public set waffeFern(value: number) {
+    this.characterStore.waffeFern = value;
+  }
   //<-----Supplied by CharacterStoreService-----/>
 
   constructor(

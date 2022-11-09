@@ -8,13 +8,14 @@ export class SteilschussDifficultyPipe implements PipeTransform {
 
   transform(value: number, weapon: Waffentyp = Waffentyp.Bogen): number {
     switch (weapon) {
-      case Waffentyp.Wurfwaffe:
+      case Waffentyp.Wurfmesser:
+      case Waffentyp.Wurfspeer:
+      case Waffentyp.Wurfbeil:
+      case Waffentyp.Diskus:
         //return +2/+8 insted of +2/+4)
         return value !== 2 ? value * 2 : value;
-        break;
       default:
         return value;
-        break;
     }
   }
 }
@@ -27,7 +28,10 @@ export class ReitDifficultyPipe implements PipeTransform {
   transform(value: number, weapon: Waffentyp = Waffentyp.Bogen, berittenerschütze: boolean = false): number {
     let difficulty;
     switch (weapon) {
-      case Waffentyp.Wurfwaffe:
+      case Waffentyp.Wurfmesser:
+      case Waffentyp.Wurfspeer:
+      case Waffentyp.Wurfbeil:
+      case Waffentyp.Diskus:
         difficulty = Math.ceil(value / 2);
         break;
       case Waffentyp.Armbrust:
@@ -89,7 +93,10 @@ export class ZweiteATDifficultyPipe implements PipeTransform {
   transform(value: boolean, weapon: Waffentyp = Waffentyp.Bogen): number {
     if (!value) return 0;
     switch (weapon) {
-      case Waffentyp.Wurfwaffe:
+      case Waffentyp.Wurfmesser:
+      case Waffentyp.Wurfspeer:
+      case Waffentyp.Wurfbeil:
+      case Waffentyp.Diskus:
         return 2;
       default:
         return 4;

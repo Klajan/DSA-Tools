@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { FernkampfTabellenService } from './fernkampf-tabellen.service';
 import { WaffentypFern as Waffentyp } from '../types/char-enums';
 import { ValueStoreFernService } from './value-store-fern.service';
-import * as DifficultyPipes  from './pipes/fernkampf-difficulty.pipe';
+import * as DifficultyPipes from './pipes/fernkampf-difficulty.pipe';
+import { WaffenTabellenFernService } from './waffen-tabellen-fern.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,12 +16,13 @@ export class FernkampfCalculatorService {
 
   private _difficulty: number = 0;
   public get difficulty() { return this._difficulty; }
-  private set difficulty( value: number) { this._difficulty = value; } 
-  
+  private set difficulty(value: number) { this._difficulty = value; }
+
 
   constructor(
     private lookupTables: FernkampfTabellenService,
-    private valueStore: ValueStoreFernService
+    private valueStore: ValueStoreFernService,
+    private waffenTables: WaffenTabellenFernService,
   ) {
     valueStore.notifyValuesChanged.subscribe(this.onNotifyValuesChanged);
   }
@@ -71,7 +73,7 @@ export class FernkampfCalculatorService {
       this.lookupTables.getReitenSchussValue(this.valueStore.reitbewegung),
       weapon,
       berittenerschütze);
-    if(this.valueStore.reitOhneSattel) difficulty += this.REITENPIPE.transform(4, weapon, berittenerschütze);
+    if (this.valueStore.reitOhneSattel) difficulty += this.REITENPIPE.transform(4, weapon, berittenerschütze);
     return difficulty;
     // let multi: number = this.valueStore.berittenerschuetze ? 2.0 : 1.0;
     // let difficulty: number = this.lookupTables.getReitenSchussValue(this.valueStore.reitbewegung);
@@ -89,7 +91,7 @@ export class FernkampfCalculatorService {
 
   private getZweiteAT(): number {
     if (!this.valueStore.zweiteAT) return 0;
-    if (this.valueStore.waffentyp === Waffentyp.Wurfwaffe) return 2;
+    if (this.valueStore.waffentyp === Waffentyp.Wurfmesser) return 2;
     return 4;
   }
 
@@ -98,6 +100,16 @@ export class FernkampfCalculatorService {
     if (this.valueStore.meisterschuetze) return 0;
     if (this.valueStore.scharfschuetze) return 1;
     return 2;
+  }
+
+  private calcDetailRange(): number {
+    const ranges = this.waffenTables.getWaffenOfType(this.valueStore.waffentyp)[this.valueStore.waffeFern].range;
+    const range = ranges[this.valueStore.distanz];
+    let difficulty = 0;
+    if (this.valueStore.einaeugig && range < 10) difficulty += 4;
+    else if (this.valueStore.farbenblind && range > 50) difficulty += 4;
+    else if (this.valueStore.kurzsichtig && range > 100) difficulty += 8;
+    return difficulty;
   }
 
   calculateDifficulty() {
@@ -116,7 +128,8 @@ export class FernkampfCalculatorService {
       Math.max(0, this.valueStore.ansage) +
       Math.min(0, Math.max(-4, this.valueStore.zielen)) +
       this.getZweiteAT() +
-      this.valueStore.misc;
+      this.valueStore.misc + 
+      this.calcDetailRange();
   }
 
   protected onNotifyValuesChanged = (() => {

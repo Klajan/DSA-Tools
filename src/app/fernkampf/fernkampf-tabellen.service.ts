@@ -115,11 +115,14 @@ export class FernkampfTabellenService {
   private static readonly _defaultSteilwurfIndex = 0;
 
   private static readonly _waffentypen: LookupTable = [
-    { name: 'Wurfwaffen', value: Waffentyp.Wurfwaffe },
+    { name: 'Wurfmesser', value: Waffentyp.Wurfmesser },
+    { name: 'Wurfspeer', value: Waffentyp.Wurfspeer },
+    { name: 'Wurfbeil', value: Waffentyp.Wurfbeil },
     { name: 'Bogen', value: Waffentyp.Bogen },
     { name: 'Armburst', value: Waffentyp.Armbrust },
     { name: 'Schleuder', value: Waffentyp.Schleuder },
     { name: 'Blasrohr', value: Waffentyp.Blasrohr },
+    { name: 'Diskus', value: Waffentyp.Diskus },
   ]
 
   get distanz() { return FernkampfTabellenService._distanz; }

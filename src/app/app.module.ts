@@ -25,6 +25,7 @@ import { MappedSliderComponent } from './mapped-slider/mapped-slider.component';
 import { ResultFernComponent } from './fernkampf/result-fern/result-fern.component';
 import { NumericInputComponent } from './numeric-input/numeric-input.component';
 import { ToggleCollapsableComponent } from './toggle-collapsable/toggle-collapsable.component';
+import { AppendRangePipe } from './fernkampf/pipes/append-range.pipe';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { ToggleCollapsableComponent } from './toggle-collapsable/toggle-collapsa
     ResultFernComponent,
     NumericInputComponent,
     ToggleCollapsableComponent,
+    AppendRangePipe,
   ],
   imports: [
     BrowserModule,

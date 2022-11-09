@@ -9,7 +9,7 @@ import { LocalStorageService } from './local-storage.service';
 })
 export class CharacterStoreService extends BaseValueStore {
 
-  private _waffentypFern: WaffentypFern = WaffentypFern.Wurfwaffe;
+  private _waffentypFern: WaffentypFern = WaffentypFern.Wurfmesser;
   public get waffentypFern(): WaffentypFern {
     return this._waffentypFern;
   }
@@ -156,6 +156,30 @@ export class CharacterStoreService extends BaseValueStore {
     this.valuesChanged();
   }
 
+  private _waffeFern = [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+  ];
+  public get waffeFern() {
+    return this._waffeFern[this._waffentypFern];
+  }
+  public set waffeFern(value: number) {
+    if(this.waffeFern === value) return;
+    this._waffeFern[this._waffentypFern] = value;
+    this.valuesChanged();
+    //console.debug(this._waffeFern);
+  }
+  public get waffenFernArray() {
+    return this._waffeFern;
+  }
+
+
   constructor(persistentStore: LocalStorageService) {
     super();
     const KEY = "CHARACTER_V0"
@@ -163,7 +187,6 @@ export class CharacterStoreService extends BaseValueStore {
       .then((value) => {
         this.setFromPersistence(value as ReturnType<CharacterStoreService['getPersistenceObject']>);
       });
-    // console.debug(this.getPersistenceObject());
   }
 
   private getPersistenceObject() {
@@ -181,28 +204,29 @@ export class CharacterStoreService extends BaseValueStore {
       schnellziehen: this.schnellziehen,
       eisenhagel: this.eisenhagel,
       berittenerschuetze: this.berittenerschuetze,
+      waffeFern: this.waffenFernArray,
     }
   }
 
   private setFromPersistence(object: ReturnType<CharacterStoreService['getPersistenceObject']> | null) {
     if (object === null) return;
-    this._waffentypFern = object.waffentypFern;
-    this._lichtVorteil = object.lichtVorteil;
-    this._entfernungsinn = object.entfernungsinn;
-    this._einaeugig = object.entfernungsinn;
-    this._farbenblind = object.farbenblind;
-    this._kurzsichtig = object.kurzsichtig;
-    this._scharfschütze = object.scharfschuetzeEnum;
-    this._schnellladen = object.schnellladen;
-    this._schnellziehen = object.schnellziehen;
-    this._eisenhagel = object.eisenhagel;
-    this._berittenerschuetze = object.berittenerschuetze;
+    this._waffentypFern = object.waffentypFern || this._waffentypFern;
+    this._lichtVorteil = object.lichtVorteil || this._lichtVorteil;
+    this._entfernungsinn = object.entfernungsinn || this._entfernungsinn;
+    this._einaeugig = object.entfernungsinn || this._einaeugig;
+    this._farbenblind = object.farbenblind || this._farbenblind;
+    this._kurzsichtig = object.kurzsichtig || this._kurzsichtig;
+    this._scharfschütze = object.scharfschuetzeEnum || this._scharfschütze;
+    this._schnellladen = object.schnellladen || this._schnellladen;
+    this._schnellziehen = object.schnellziehen || this._schnellziehen;
+    this._eisenhagel = object.eisenhagel || this._eisenhagel;
+    this._berittenerschuetze = object.berittenerschuetze || this._berittenerschuetze;
+    this._waffeFern = object.waffeFern || this._waffeFern;
     this.valuesChanged();
-    this.hasChanged = false;
   }
 
   public resetToDefaults() {
-    this._waffentypFern = WaffentypFern.Wurfwaffe;
+    this._waffentypFern = WaffentypFern.Wurfmesser;
     this._lichtVorteil = LichtVorteil.None;
     this._entfernungsinn = false;
     this._einaeugig = false;
