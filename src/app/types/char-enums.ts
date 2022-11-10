@@ -1,9 +1,12 @@
 enum WaffentypFern {
     Bogen,
     Armbrust,
-    Wurfwaffe,
+    Wurfmesser,
+    Wurfspeer,
+    Wurfbeil,
     Schleuder,
-    Blasrohr
+    Blasrohr,
+    Diskus
 }
 
 enum LichtVorteil {

@@ -19,12 +19,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatTooltipModule } from '@angular/material/tooltip';
+
 import { NavbarComponent } from './navbar/navbar.component';
 import { FernkampfComponent } from './fernkampf/fernkampf/fernkampf.component';
 import { MappedSliderComponent } from './mapped-slider/mapped-slider.component';
 import { ResultFernComponent } from './fernkampf/result-fern/result-fern.component';
-import { NumericInputComponent } from './numeric-input/numeric-input.component';
 import { ToggleCollapsableComponent } from './toggle-collapsable/toggle-collapsable.component';
+import { AppendRangePipe } from './fernkampf/pipes/append-range.pipe';
 
 @NgModule({
   declarations: [
@@ -33,8 +35,8 @@ import { ToggleCollapsableComponent } from './toggle-collapsable/toggle-collapsa
     FernkampfComponent,
     MappedSliderComponent,
     ResultFernComponent,
-    NumericInputComponent,
     ToggleCollapsableComponent,
+    AppendRangePipe,
   ],
   imports: [
     BrowserModule,
@@ -55,6 +57,7 @@ import { ToggleCollapsableComponent } from './toggle-collapsable/toggle-collapsa
     MatExpansionModule,
     FormsModule,
     MatSelectModule,
+    MatTooltipModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

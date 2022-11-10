@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { WaffentypFern as Waffentyp } from '../types/char-enums';
+import { WaffentypFern as Waffentyp } from '../../types/char-enums';
 
 export type LookupTable = Array<{ name: string, value: number, comment?: string }>;
 
@@ -115,11 +115,14 @@ export class FernkampfTabellenService {
   private static readonly _defaultSteilwurfIndex = 0;
 
   private static readonly _waffentypen: LookupTable = [
-    { name: 'Wurfwaffen', value: Waffentyp.Wurfwaffe },
+    { name: 'Wurfmesser', value: Waffentyp.Wurfmesser },
+    { name: 'Wurfspeer', value: Waffentyp.Wurfspeer },
+    { name: 'Wurfbeil', value: Waffentyp.Wurfbeil },
     { name: 'Bogen', value: Waffentyp.Bogen },
     { name: 'Armburst', value: Waffentyp.Armbrust },
     { name: 'Schleuder', value: Waffentyp.Schleuder },
     { name: 'Blasrohr', value: Waffentyp.Blasrohr },
+    { name: 'Diskus', value: Waffentyp.Diskus },
   ]
 
   get distanz() { return FernkampfTabellenService._distanz; }
