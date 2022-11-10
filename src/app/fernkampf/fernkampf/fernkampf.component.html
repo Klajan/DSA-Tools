@@ -7,27 +7,27 @@
             </mat-expansion-panel-header>
             <div class="container-fluid">
                 <div class="row mb-2">
-                    <div class="col col-md-2">
+                    <div class="col col-xl-2">
                         <mat-form-field appearance="outline" floatLabel="always">
                             <mat-label>Ansage</mat-label>
                             <input matInput name="ansage" type="number" min="0" max="32" placeholder="0"
                                 [(ngModel)]="valueStore.ansage">
                         </mat-form-field>
                     </div>
-                    <div class="col col-md-2">
+                    <div class="col col-xl-2">
                         <mat-form-field appearance="outline" floatLabel="always">
                             <mat-label>Zielen</mat-label>
                             <input matInput name="zielen" type="number" min="-4" max="0" placeholder="0"
                                 [(ngModel)]="valueStore.zielen">
                         </mat-form-field>
                     </div>
-                    <div class="col col-md-2">
+                    <div class="col col-xl-2">
                         <mat-form-field appearance="outline" floatLabel="always">
                             <mat-label>Misc</mat-label>
                             <input matInput name="misc" type="number" placeholder="0" [(ngModel)]="valueStore.misc">
                         </mat-form-field>
                     </div>
-                    <div class="col">
+                    <div class="col col-xl-2">
                         <div class="row">
                             <div class="col">
                                 <mat-slide-toggle [(ngModel)]="valueStore.schnellschuss">

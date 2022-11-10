@@ -15,4 +15,12 @@
         background-color: mat.get-color-from-palette($my-accent) !important;
         border-color: mat.get-color-from-palette($my-accent) !important;
     }
+    @media (max-width: 767.98px) {
+        .mat-slider-thumb-container {
+            pointer-events: all;
+        }
+        mat-slider {
+            pointer-events: none;
+        }
+    }
 }
