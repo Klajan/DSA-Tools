@@ -1,10 +1,20 @@
 <div class="sticky-top border container bg-opacity-100 bg-light overflow-hidden">
     <div class="row opacity-100 px-1">
         <div class="col-4 d-flex align-middle align-items-center">
-            <mat-label class="text-lg align-middle align-self-center">{{calcService.difficulty}}</mat-label>
+            <mat-label class="d-none d-md-block text-lg align-middle align-self-center text-muted">Erschwernis:</mat-label>
+            <mat-icon class="d-flex d-md-none align-middle align-self-center">nat</mat-icon>
+            <mat-label class="text-lg align-middle align-self-center text-nowrap ml-1">&nbsp;{{calcService.difficulty}}</mat-label>
         </div>
-        <div class="col-4 col-md-3 offset-4 offset-md-5 align-middle align-items-center">
-            <button mat-flat-button class="float-end mx-0 my-1 w-100 text-center" color="primary" (click)="reset()">RESET</button>
+        <div class="col-4 d-flex align-middle align-items-center">
+            <mat-label class="d-none d-md-block text-lg align-middle align-self-center text-muted">Ladezeit:</mat-label>
+            <mat-icon class="d-flex d-md-none align-middle align-self-center">hourglass_empty</mat-icon>
+            <mat-label class="text-lg align-middle align-self-center text-nowrap ml-1">&nbsp;{{timeCalcService.time}}</mat-label>
+        </div>
+        <div class="col-4 col-md-3 offset-md-1 align-middle align-items-center">
+            <button mat-flat-button class="float-end mx-0 my-1 text-center" color="primary" (click)="reset()">
+                <mat-label class="d-none d-md-block align-middle align-self-center">RESET</mat-label>
+                <mat-icon class="d-md-none align-middle align-self-center">restore</mat-icon>
+            </button>
         </div>
     </div>
     
