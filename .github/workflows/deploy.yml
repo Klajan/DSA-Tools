@@ -3,18 +3,23 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-and-deploy:
+  bump-version:
     runs-on: ubuntu-latest
-
     steps:    
     - name: Checkout
       uses: actions/checkout@v3
-      
+
     - name: Bump version and push tag
       id: tag_version
       uses: mathieudutour/github-tag-action@v6.1
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
+
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:    
+    - name: Checkout
+      uses: actions/checkout@v3
 
     - name: Use Node.js 18
       uses: actions/setup-node@v3
@@ -24,6 +29,8 @@ jobs:
     - name: Prepare and deploy
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GH_EMAIL: ${{ secrets.GH_EMAIL }}
+        GH_USER: Klajan
       run: |
         npm install
-        npm run ng -- deploy --base-href=/DSA-Tools/ --name="Klajan" --email="48261494+Klajan@users.noreply.github.com" --no-silent
+        npm run ng -- deploy --base-href=/DSA-Tools/ --name="$GH_USER" --email="$GH_EMAIL" --no-silent
