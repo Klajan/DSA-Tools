@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { WaffenTabellenFernService } from './waffen-tabellen-fern.service';
-import { ValueStoreFernService } from './value-store-fern.service';
-import { WaffentypFern, Scharfschütze } from '../types/char-enums';
+import { FernkampfWaffenTabellenService } from './fernkampf-waffen-tabellen.service';
+import { FernkampfValueStoreService } from './fernkampf-value-store.service';
+import { WaffentypFern, Scharfschütze } from '../../types/char-enums';
 
 @Injectable({
   providedIn: 'root'
@@ -17,8 +17,8 @@ export class FernkampfTimeCalculatorService {
   }
 
   constructor(
-    private waffenFern: WaffenTabellenFernService,
-    private valueStore: ValueStoreFernService,
+    private waffenFern: FernkampfWaffenTabellenService,
+    private valueStore: FernkampfValueStoreService,
   ) {
     valueStore.notifyValuesChanged.subscribe(this.onNotifyValuesChanged.bind(this));
   }

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { WaffentypFern as Waffentyp } from '../types/char-enums';
+import { WaffentypFern as Waffentyp } from '../../types/char-enums';
 
 export type LookupTable = Array<{ name: string, value: number, comment?: string }>;
 

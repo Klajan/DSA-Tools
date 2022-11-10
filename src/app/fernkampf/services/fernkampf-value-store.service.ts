@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 
-import { BaseValueStore } from '../base-value-store';
-import { LichtVorteil, Scharfschütze, WaffentypFern as Waffentyp } from '../types/char-enums';
-import { CharacterStoreService } from '../character-store.service';
-import { LocalStorageService } from '../local-storage.service';
+import { BaseValueStore } from '../../base-value-store';
+import { LichtVorteil, Scharfschütze, WaffentypFern as Waffentyp } from '../../types/char-enums';
+import { CharacterStoreService } from '../../character-store.service';
+import { LocalStorageService } from '../../local-storage.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ValueStoreFernService extends BaseValueStore {
+export class FernkampfValueStoreService extends BaseValueStore {
 
   private static readonly RESET = {
     distanz: 1,
@@ -374,7 +374,7 @@ export class ValueStoreFernService extends BaseValueStore {
     }
   }
 
-  private setFromLocal(object: ReturnType<ValueStoreFernService['getForStore']> | null) {
+  private setFromLocal(object: ReturnType<FernkampfValueStoreService['getForStore']> | null) {
     if (object === null) return;
     this.waffentyp = object.waffentyp;
     this.lichtVorteil = object.lichtVorteil;
@@ -391,25 +391,25 @@ export class ValueStoreFernService extends BaseValueStore {
 
   public resetToDefaults() {
     console.debug("RESETTING");
-    this._distanz = ValueStoreFernService.RESET.distanz;
-    this._licht = ValueStoreFernService.RESET.licht;
-    this._sicht = ValueStoreFernService.RESET.sicht;
-    this._bewegung = ValueStoreFernService.RESET.bewegung;
-    this._ziel = ValueStoreFernService.RESET.ziel;
-    this._hasDeckung = ValueStoreFernService.RESET.toggles;
-    this._deckung = ValueStoreFernService.RESET.deckung;
-    this._isWind = ValueStoreFernService.RESET.toggles;
-    this._wind = ValueStoreFernService.RESET.wind;
-    this._isSteilschuss = ValueStoreFernService.RESET.toggles;
-    this._steilschuss = ValueStoreFernService.RESET.steilschuss;
-    this._hasReittier = ValueStoreFernService.RESET.toggles;
-    this._reitOhneSattel = ValueStoreFernService.RESET.toggles;
-    this._reitbewegung = ValueStoreFernService.RESET.reitbewegung;
-    this._schnellschuss = ValueStoreFernService.RESET.toggles;
-    this._ansage = ValueStoreFernService.RESET.ansage;
-    this._zielen = ValueStoreFernService.RESET.zielen;
-    this._misc = ValueStoreFernService.RESET.misc;
-    this._zweiteAT = ValueStoreFernService.RESET.toggles;
+    this._distanz = FernkampfValueStoreService.RESET.distanz;
+    this._licht = FernkampfValueStoreService.RESET.licht;
+    this._sicht = FernkampfValueStoreService.RESET.sicht;
+    this._bewegung = FernkampfValueStoreService.RESET.bewegung;
+    this._ziel = FernkampfValueStoreService.RESET.ziel;
+    this._hasDeckung = FernkampfValueStoreService.RESET.toggles;
+    this._deckung = FernkampfValueStoreService.RESET.deckung;
+    this._isWind = FernkampfValueStoreService.RESET.toggles;
+    this._wind = FernkampfValueStoreService.RESET.wind;
+    this._isSteilschuss = FernkampfValueStoreService.RESET.toggles;
+    this._steilschuss = FernkampfValueStoreService.RESET.steilschuss;
+    this._hasReittier = FernkampfValueStoreService.RESET.toggles;
+    this._reitOhneSattel = FernkampfValueStoreService.RESET.toggles;
+    this._reitbewegung = FernkampfValueStoreService.RESET.reitbewegung;
+    this._schnellschuss = FernkampfValueStoreService.RESET.toggles;
+    this._ansage = FernkampfValueStoreService.RESET.ansage;
+    this._zielen = FernkampfValueStoreService.RESET.zielen;
+    this._misc = FernkampfValueStoreService.RESET.misc;
+    this._zweiteAT = FernkampfValueStoreService.RESET.toggles;
     this.valuesChanged();
   }
 

@@ -1,6 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
-import { LookupTable } from '../fernkampf-tabellen.service';
+import { LookupTable } from '../services/fernkampf-tabellen.service';
 
 @Pipe({
   name: 'appendRange'

@@ -1,11 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 
-import { FernkampfTabellenService } from '../fernkampf-tabellen.service';
-import { ValueStoreFernService } from '../value-store-fern.service';
-import { FernkampfCalculatorService } from '../fernkampf-calculator.service';
-import { MatSlideToggleChange } from '@angular/material/slide-toggle';
+import { FernkampfTabellenService } from '../services/fernkampf-tabellen.service';
+import { FernkampfValueStoreService } from '../services/fernkampf-value-store.service';
 import * as DifficultyPipes from '../pipes/fernkampf-difficulty.pipe';
-import { WaffenTabellenFernService } from '../waffen-tabellen-fern.service';
+import { FernkampfWaffenTabellenService } from '../services/fernkampf-waffen-tabellen.service';
 import { AppendRangePipe } from '../pipes/append-range.pipe';
 
 @Component({
@@ -22,8 +20,8 @@ export class FernkampfComponent implements OnInit {
 
   constructor(
     protected lookupTable: FernkampfTabellenService,
-    protected valueStore: ValueStoreFernService,
-    protected waffenTable: WaffenTabellenFernService,
+    protected valueStore: FernkampfValueStoreService,
+    protected waffenTable: FernkampfWaffenTabellenService,
   ) { }
 
   ngOnInit(): void {

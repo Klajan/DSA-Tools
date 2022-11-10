@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { WaffentypFern } from '../types/char-enums';
+import { WaffentypFern } from '../../types/char-enums';
 
 export type Fernkampfwaffe = {
   name: string;
@@ -13,18 +13,18 @@ export type Fernkampfwaffe = {
 @Injectable({
   providedIn: 'root'
 })
-export class WaffenTabellenFernService {
+export class FernkampfWaffenTabellenService {
 
   constructor() { }
 
-  public get bogen() { return WaffenTabellenFernService._bogen; }
-  public get armbrust() { return WaffenTabellenFernService._armbrust; }
-  public get wurfmesser() { return WaffenTabellenFernService._wurfmesser; }
-  public get wurfspeer() { return WaffenTabellenFernService._wurfspeer; }
-  public get wurfbeil() { return WaffenTabellenFernService._wurfbeil; }
-  public get schleuder() { return WaffenTabellenFernService._schleuder; }
-  public get diskus() { return WaffenTabellenFernService._diskus; }
-  public get blasrohr() { return WaffenTabellenFernService._blasrohr; }
+  public get bogen() { return FernkampfWaffenTabellenService._bogen; }
+  public get armbrust() { return FernkampfWaffenTabellenService._armbrust; }
+  public get wurfmesser() { return FernkampfWaffenTabellenService._wurfmesser; }
+  public get wurfspeer() { return FernkampfWaffenTabellenService._wurfspeer; }
+  public get wurfbeil() { return FernkampfWaffenTabellenService._wurfbeil; }
+  public get schleuder() { return FernkampfWaffenTabellenService._schleuder; }
+  public get diskus() { return FernkampfWaffenTabellenService._diskus; }
+  public get blasrohr() { return FernkampfWaffenTabellenService._blasrohr; }
 
   public getWaffenOfType(type: WaffentypFern) {
     switch (type) {

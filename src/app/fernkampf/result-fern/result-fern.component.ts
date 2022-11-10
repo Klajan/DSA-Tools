@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
-import { FernkampfCalculatorService } from '../fernkampf-calculator.service';
-import { ValueStoreFernService } from '../value-store-fern.service';
-import { FernkampfTimeCalculatorService } from '../fernkampf-time-calculator.service';
+import { FernkampfCalculatorService } from '../services/fernkampf-calculator.service';
+import { FernkampfValueStoreService } from '../services/fernkampf-value-store.service';
+import { FernkampfTimeCalculatorService } from '../services/fernkampf-time-calculator.service';
 
 @Component({
   selector: 'app-result-fern',
@@ -12,7 +12,7 @@ import { FernkampfTimeCalculatorService } from '../fernkampf-time-calculator.ser
 export class ResultFernComponent implements OnInit {
 
   constructor(
-    protected valueStore: ValueStoreFernService,
+    protected valueStore: FernkampfValueStoreService,
     protected calcService: FernkampfCalculatorService,
     protected timeCalcService: FernkampfTimeCalculatorService,
   ) { }

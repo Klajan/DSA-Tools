@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { FernkampfTabellenService } from './fernkampf-tabellen.service';
-import { WaffentypFern as Waffentyp } from '../types/char-enums';
-import { ValueStoreFernService } from './value-store-fern.service';
-import * as DifficultyPipes from './pipes/fernkampf-difficulty.pipe';
-import { WaffenTabellenFernService } from './waffen-tabellen-fern.service';
+import { WaffentypFern as Waffentyp } from '../../types/char-enums';
+import { FernkampfValueStoreService } from './fernkampf-value-store.service';
+import * as DifficultyPipes from '../pipes/fernkampf-difficulty.pipe';
+import { FernkampfWaffenTabellenService } from './fernkampf-waffen-tabellen.service';
 
 @Injectable({
   providedIn: 'root'
@@ -21,8 +21,8 @@ export class FernkampfCalculatorService {
 
   constructor(
     private lookupTables: FernkampfTabellenService,
-    private valueStore: ValueStoreFernService,
-    private waffenTables: WaffenTabellenFernService,
+    private valueStore: FernkampfValueStoreService,
+    private waffenTables: FernkampfWaffenTabellenService,
   ) {
     valueStore.notifyValuesChanged.subscribe(this.onNotifyValuesChanged);
   }
