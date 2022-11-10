@@ -19,6 +19,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatTooltipModule } from '@angular/material/tooltip';
+
 import { NavbarComponent } from './navbar/navbar.component';
 import { FernkampfComponent } from './fernkampf/fernkampf/fernkampf.component';
 import { MappedSliderComponent } from './mapped-slider/mapped-slider.component';
@@ -55,6 +57,7 @@ import { AppendRangePipe } from './fernkampf/pipes/append-range.pipe';
     MatExpansionModule,
     FormsModule,
     MatSelectModule,
+    MatTooltipModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

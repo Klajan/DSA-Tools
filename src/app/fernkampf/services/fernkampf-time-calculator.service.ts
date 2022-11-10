@@ -8,12 +8,28 @@ import { WaffentypFern, Scharfschütze } from '../../types/char-enums';
 })
 export class FernkampfTimeCalculatorService {
 
-  private _time: number = 0;
-  public get time(): number {
-    return this._time;
+  private _totalTime: number = 0;
+  public get totalTime(): number {
+    return this._totalTime;
   }
-  public set time(value: number) {
-    this._time = value;
+  private set totalTime(value: number) {
+    this._totalTime = value;
+  }
+
+  private _reloadTime: number = 0;
+  public get reloadTime(): number {
+    return this._reloadTime;
+  }
+  private set reloadTime(value: number) {
+    this._reloadTime = value;
+  }
+
+  private _aimTime: number = 0;
+  public get aimTime(): number {
+    return this._aimTime;
+  }
+  private set aimTime(value: number) {
+    this._aimTime = value;
   }
 
   constructor(
@@ -59,11 +75,12 @@ export class FernkampfTimeCalculatorService {
   }
 
   public calculateTime() {
-    this._time =
-      this.calcReload() +
+    this._reloadTime = this.calcReload();
+    this._aimTime = 
       this.calcAim() + 
       this.calcAnsage() +
       this.getSchnellschuss();
+    this._totalTime = this._reloadTime + this._aimTime;
   }
 
   private onNotifyValuesChanged() {
