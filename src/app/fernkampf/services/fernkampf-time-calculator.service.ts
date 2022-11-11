@@ -48,6 +48,17 @@ export class FernkampfTimeCalculatorService {
         reload = Math.ceil(reload * 0.75);
       }
     }
+    if (this.valueStore.hasReittier) {
+      if (
+        !this.valueStore.berittenerschuetze &&
+        (this.valueStore.waffentyp === WaffentypFern.Bogen ||
+        this.valueStore.waffentyp === WaffentypFern.Armbrust ||
+        this.valueStore.waffentyp === WaffentypFern.Blasrohr ||
+        this.valueStore.waffentyp === WaffentypFern.Schleuder)
+        ) {
+        reload = Math.ceil(reload * 1.5);
+      }
+    }
     return reload;
   }
 
