@@ -22,8 +22,16 @@ enum Scharfschütze {
     Meisterschütze,
 }
 
+enum Distanzklasse {
+    Handgemenge,
+    Nahkampf,
+    Stangenwaffe,
+    Pike,
+}
+
 export {
     WaffentypFern,
     LichtVorteil,
     Scharfschütze,
+    Distanzklasse,
 }

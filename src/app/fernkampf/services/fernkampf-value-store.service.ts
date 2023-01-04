@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { BaseValueStore } from '../../base-value-store';
-import { LichtVorteil, Scharfschütze, WaffentypFern as Waffentyp } from '../../types/char-enums';
+import { Distanzklasse, LichtVorteil, Scharfschütze, WaffentypFern as Waffentyp } from '../../types/char-enums';
 import { CharacterStoreService } from '../../character-store.service';
 import { LocalStorageService } from '../../local-storage.service';
 
@@ -23,6 +23,7 @@ export class FernkampfValueStoreService extends BaseValueStore {
     ansage: 0,
     zielen: 0,
     misc: 0,
+    numZielInNahkampf: 2,
     toggles: false,
   }
 
@@ -227,6 +228,40 @@ export class FernkampfValueStoreService extends BaseValueStore {
     this.valuesChanged();
   }
 
+  private _isZielInNahkampf: boolean = false;
+  public get isZielInNahkampf(): boolean {
+    return this._isZielInNahkampf;
+  }
+  public set isZielInNahkampf(value: boolean) {
+    if(this._isZielInNahkampf === value) return;
+    this._isZielInNahkampf = value;
+    this.valuesChanged();
+  }
+
+  private _isZielInHandkampf: boolean = false;
+  public get isZielInHandkampf(): boolean {
+    return this._isZielInHandkampf;
+  }
+  public set isZielInHandkampf(value: boolean) {
+    if(this._isZielInHandkampf === value) return;
+    this._isZielInHandkampf = value;
+    this.valuesChanged();
+  }
+
+  public get zielNahkampfDistanz() {
+    return this._isZielInHandkampf ? Distanzklasse.Handgemenge : Distanzklasse.Nahkampf;
+  }
+
+  private _numZielInNahkampf: number = 2;
+  public get numZielInNahkampf(): number {
+    return this._numZielInNahkampf;
+  }
+  public set numZielInNahkampf(value: number | null) {
+    if(this._numZielInNahkampf === value) return;
+    this._numZielInNahkampf = value || 2;
+    this.valuesChanged();
+  }
+
   //<-----Supplied by CharacterStoreService----->
   // Vor- / Nachteile
   public get waffentyp(): Waffentyp {
@@ -410,6 +445,9 @@ export class FernkampfValueStoreService extends BaseValueStore {
     this._zielen = FernkampfValueStoreService.RESET.zielen;
     this._misc = FernkampfValueStoreService.RESET.misc;
     this._zweiteAT = FernkampfValueStoreService.RESET.toggles;
+    this._numZielInNahkampf = FernkampfValueStoreService.RESET.numZielInNahkampf;
+    this._isZielInNahkampf = FernkampfValueStoreService.RESET.toggles;
+    this._isZielInHandkampf = FernkampfValueStoreService.RESET.toggles;
     this.valuesChanged();
   }
 

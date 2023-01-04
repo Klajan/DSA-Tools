@@ -1,4 +1,4 @@
-import { SteilschussDifficultyPipe, ReitDifficultyPipe, LichtDifficultyPipe, SchnellschussDifficultyPipe, ZweiteATDifficultyPipe } from './fernkampf-difficulty.pipe';
+import { SteilschussDifficultyPipe, ReitDifficultyPipe, LichtDifficultyPipe, SchnellschussDifficultyPipe, ZweiteATDifficultyPipe, KampfgetuemmelDifficultyPipe } from './fernkampf-difficulty.pipe';
 
 describe('SteilschussDifficultyPipe', () => {
   it('create an instance', () => {
@@ -31,6 +31,13 @@ describe('SchnellschussDifficultyPipe', () => {
 describe('ZweiteATDifficultyPipe', () => {
   it('create an instance', () => {
     const pipe = new ZweiteATDifficultyPipe();
+    expect(pipe).toBeTruthy();
+  });
+});
+
+describe('KampfgetuemmelDifficultyPipe', () => {
+  it('create an instance', () => {
+    const pipe = new KampfgetuemmelDifficultyPipe();
     expect(pipe).toBeTruthy();
   });
 });
