@@ -117,7 +117,9 @@ export class FernkampfCalculatorService {
     if(!this.valueStore.isZielInNahkampf) return 0;
     const nahkämpfer = this.valueStore.numZielInNahkampf;
     const nahdistanz = this.valueStore.zielNahkampfDistanz;
-    return this.KAMPFGETÜMMELPIPE.transform(nahkämpfer, nahdistanz);
+    return this.KAMPFGETÜMMELPIPE.transform(nahkämpfer, nahdistanz)
+      - this.lookupTables.getBewegungValue(this.valueStore.bewegung);
+      //🠕🠕 Remove Movement Difficulty 🠕🠕
   }
 
   calculateDifficulty() {
