@@ -13,6 +13,7 @@ export class FernkampfCalculatorService {
   private readonly LICHTPIPE = new DifficultyPipes.LichtDifficultyPipe();
   private readonly STEILSCHUSSPIPE = new DifficultyPipes.SteilschussDifficultyPipe();
   private readonly REITENPIPE = new DifficultyPipes.ReitDifficultyPipe();
+  private readonly KAMPFGETÜMMELPIPE = new DifficultyPipes.KampfgetuemmelDifficultyPipe();
 
   private _difficulty: number = 0;
   public get difficulty() { return this._difficulty; }
@@ -112,6 +113,15 @@ export class FernkampfCalculatorService {
     return difficulty;
   }
 
+  private calcKampfgetümmel(): number {
+    if(!this.valueStore.isZielInNahkampf) return 0;
+    const nahkämpfer = this.valueStore.numZielInNahkampf;
+    const nahdistanz = this.valueStore.zielNahkampfDistanz;
+    return this.KAMPFGETÜMMELPIPE.transform(nahkämpfer, nahdistanz)
+      - this.lookupTables.getBewegungValue(this.valueStore.bewegung);
+      //🠕🠕 Remove Movement Difficulty 🠕🠕
+  }
+
   calculateDifficulty() {
     this._difficulty =
       this.lookupTables.getZielValue(this.valueStore.ziel) +
@@ -129,7 +139,8 @@ export class FernkampfCalculatorService {
       Math.min(0, Math.max(-4, this.valueStore.zielen)) +
       this.getZweiteAT() +
       this.valueStore.misc + 
-      this.calcDetailRange();
+      this.calcDetailRange() +
+      this.calcKampfgetümmel();
   }
 
   protected onNotifyValuesChanged = (() => {

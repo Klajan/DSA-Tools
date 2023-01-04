@@ -80,6 +80,20 @@
                 </mat-expansion-panel-header>
                 <div class="row">
                     <div class="col-12 col-md-6 justify-content-center">
+                        <app-toggle-collapsable label="Schuss ins Kampfgetümmel"
+                            [(enabled)]="valueStore.isZielInNahkampf">
+                            <div>
+                                <mat-slide-toggle [(ngModel)]="valueStore.isZielInHandkampf">
+                                    Ziele sind im Handgemenge
+                                </mat-slide-toggle>
+                                <app-value-slider [min]="2" [max]="12" sliderLabel="Ziele im Nahkampf: "
+                                    [(sliderValue)]="valueStore.numZielInNahkampf"
+                                    [valuePipe]="KampfgetuemmelPipe"
+                                    [valuePipeParam]="[valueStore.zielNahkampfDistanz]"></app-value-slider>
+                            </div>
+                        </app-toggle-collapsable>
+                    </div>
+                    <div class="col-12 col-md-6 justify-content-center">
                         <app-toggle-collapsable label="Gegner in Deckung" [(enabled)]="valueStore.hasDeckung">
                             <app-mapped-slider [items]="lookupTable.deckung" [(sliderValue)]="valueStore.deckung">
                             </app-mapped-slider>

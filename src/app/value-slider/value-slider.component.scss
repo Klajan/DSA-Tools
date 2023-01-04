@@ -1,0 +1,26 @@
+//@use 'sass:map';
+@use '@angular/material' as mat;
+@import '../../theme.scss';
+//@import '../../styles.scss';
+
+.div-parent {
+    max-width: 400px;
+    max-height: 200px;
+    //width: 100%;
+    //margin: auto;
+}
+
+::ng-deep {
+    mat-slider.mat-slider-min-value:not(.mat-slider-thumb-value-showing) .mat-slider-thumb {
+        background-color: mat.get-color-from-palette($my-accent) !important;
+        border-color: mat.get-color-from-palette($my-accent) !important;
+    }
+    @media (max-width: 767.98px) {
+        .mat-slider-thumb-container {
+            pointer-events: all;
+        }
+        mat-slider {
+            pointer-events: none;
+        }
+    }
+}

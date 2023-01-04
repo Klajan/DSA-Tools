@@ -17,6 +17,7 @@ export class FernkampfComponent implements OnInit {
   protected readonly SteilschussPipe = new DifficultyPipes.SteilschussDifficultyPipe();
   protected readonly ReitenPipe = new DifficultyPipes.ReitDifficultyPipe();
   protected readonly AppendRangePipe = new AppendRangePipe();
+  protected readonly KampfgetuemmelPipe = new DifficultyPipes.KampfgetuemmelDifficultyPipe();
 
   constructor(
     protected lookupTable: FernkampfTabellenService,

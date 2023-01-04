@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { LichtVorteil, Scharfschütze, WaffentypFern as Waffentyp } from 'src/app/types/char-enums';
+import { LichtVorteil, Scharfschütze, WaffentypFern as Waffentyp, Distanzklasse } from 'src/app/types/char-enums';
 
 @Pipe({
   name: 'steilschussDifficulty'
@@ -100,6 +100,25 @@ export class ZweiteATDifficultyPipe implements PipeTransform {
         return 2;
       default:
         return 4;
+    }
+  }
+}
+
+@Pipe({
+  name: 'kampfgetuemmelDifficulty'
+})
+export class KampfgetuemmelDifficultyPipe implements PipeTransform {
+
+  transform(value: number, distanz: Distanzklasse = Distanzklasse.Nahkampf): number {
+    if (!value) return 0;
+    switch (distanz) {
+      case Distanzklasse.Handgemenge:
+        return value * 3;
+      case Distanzklasse.Nahkampf:
+      case Distanzklasse.Stangenwaffe:
+        return value * 2;
+      default:
+        return value;
     }
   }
 }
