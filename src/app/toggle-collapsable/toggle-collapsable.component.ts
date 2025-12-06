@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter, ContentChild } from '@angular/core';
-import { MatSlideToggleChange } from '@angular/material/slide-toggle';
+import { MatLegacySlideToggleChange as MatSlideToggleChange } from '@angular/material/legacy-slide-toggle';
 import { trigger, state, style, animate, transition } from '@angular/animations';
 
 @Component({
